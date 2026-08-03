@@ -60,12 +60,22 @@ footprint shaded in its record-type color. Pick a township from the sidebar,
 see its tracts and acreage, and click any shaded parcel (or a tract in the
 list) to open the record.
 
-### 5. Documents (real, openable PDFs)
+### 5. Documents (real, openable PDFs) + PDF auto-fill on intake
 Every seeded record carries **generated mock PDF instruments** — lease
 agreements, ROW grants, easements, permits, royalty agreements, plus a few
 Land Department memos. They open in an in-app PDF viewer and can be
 downloaded. New intake supports **drag-and-drop of your own files** (read
 in-browser, no upload) which then open the same way.
+
+When you attach a **PDF** during intake, the app **reads the document text
+in-browser and pre-fills the form** — record type, lessor/grantor,
+lessee/grantee, county/state, legal description, acreage, recording number,
+effective & term-end dates, rental, and royalty rate. It only fills **empty**
+fields, flashes what it guessed, and shows a summary banner — everything
+stays editable, so any guess can be overridden. Text extraction handles both
+uncompressed and FlateDecode-compressed streams (via the browser's native
+`DecompressionStream`); parsing is heuristic and best-effort for arbitrary
+real-world PDFs.
 
 ### 6. Dashboard
 Portfolio KPIs (records, acreage under management, overdue/soon obligations,

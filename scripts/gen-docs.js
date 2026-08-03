@@ -11,6 +11,7 @@ const ROOT = path.resolve(__dirname, "..");
 function sanitize(s) {
   return String(s)
     .replace(/[–—]/g, "-")   // en/em dash
+    .replace(/[·•]/g, "|")   // middot separator -> pipe (survives ascii filter, aids parsing)
     .replace(/½/g, "1/2").replace(/¼/g, "1/4").replace(/¾/g, "3/4")
     .replace(/[‘’]/g, "'").replace(/[“”]/g, '"')
     .replace(/§/g, "Sec.").replace(/[^\x20-\x7E]/g, "");
