@@ -5,57 +5,84 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>NTEC Land Management System</title>
 <style>
+  /* ==========================================================================
+     NTEC design tokens — dark UI theme built from the official NTEC palette.
+     Source of truth: design-system/css/ntec-tokens.css (NTEC Brand Standards
+     Guideline, May 2024). Primary palette: Orange #DA6227, Sky #69BDE2,
+     Sand #D8C9A3, Black #211E1F. Secondary: Steel #496A96, Navy #2D3949,
+     Brown #31261D, Sage #6C886A, Mauve #9B7793.
+     The brand guide does not define a dark mode; surfaces below are anchored to
+     the NTEC Navy family and accents use the primary palette verbatim.
+     ========================================================================== */
   :root {
-    --bg: #0f1419;
-    --bg-2: #161d26;
-    --panel: #1c2530;
-    --panel-2: #222d3a;
-    --border: #2c3a49;
-    --text: #e6edf3;
-    --text-dim: #93a1b0;
-    --text-faint: #64748b;
-    --accent: #c8862b;      /* earthen gold */
-    --accent-2: #d99a3f;
-    --brand: #8a5a2b;       /* mesa brown */
-    --brand-2: #b5793a;
-    --sky: #3f7fbf;
-    --green: #3fae6a;
-    --amber: #d9a441;
-    --red: #d95757;
-    --shadow: 0 2px 8px rgba(0,0,0,.35);
-    --radius: 10px;
+    /* Fonts — brand-mandated Franklin Gothic Medium (display) + Calibri (body) */
+    --font-display: "Franklin Gothic Medium", "Franklin Gothic",
+                    "ITC Franklin Gothic", "Arial Narrow", Arial, sans-serif;
+    --font-body: Calibri, "Carlito", "Segoe UI", Tahoma,
+                 "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+    /* Surfaces — NTEC Navy family */
+    --bg: #1a222e;          /* darkened navy */
+    --bg-2: #212b39;
+    --panel: #2d3949;       /* NTEC Navy (Pantone 433 C) */
+    --panel-2: #374559;
+    --border: #3e4e63;
+
+    /* Text — near-white on dark */
+    --text: #f5f3ef;
+    --text-dim: #b9c0cb;
+    --text-faint: #8a94a2;
+
+    /* Accents — NTEC primary palette */
+    --accent: #da6227;      /* NTEC Orange (Pantone 1655 C) — primary CTA */
+    --accent-2: #e1743d;    /* orange, lightened for hover */
+    --brand: #c2531f;       /* orange, darkened (action-primary-active) */
+    --brand-2: #da6227;
+    --sky: #69bde2;         /* NTEC Sky (Pantone 2915 C) — links, focus */
+
+    /* Status — palette-derived, lightened for legibility on dark surfaces */
+    --green: #7b9e79;       /* Sage family (success) */
+    --amber: #e0a458;       /* warm amber (warning) — distinct from CTA orange */
+    --red: #e06a5e;         /* danger */
+
+    --shadow: 0 2px 8px rgba(20,26,36,.5);
+    --radius: 8px;          /* --ntec-radius-lg */
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; height: 100%; }
   body {
-    font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+    font-family: var(--font-body);
     background: var(--bg);
     color: var(--text);
     font-size: 14px;
-    line-height: 1.45;
+    line-height: 1.5;
   }
+  /* Headings, eyebrows, table headers, buttons use the NTEC display face */
+  h1, h2, h3, h4, .page-title, .stat .v, .stat .k, .nav .label,
+  thead th, .btn, .field label { font-family: var(--font-display); }
   button { font-family: inherit; cursor: pointer; }
   a { color: var(--sky); text-decoration: none; }
 
   /* Layout */
   .app { display: grid; grid-template-columns: 232px 1fr; min-height: 100vh; }
   .sidebar {
-    background: linear-gradient(180deg, #131a22 0%, #0f1419 100%);
+    background: linear-gradient(180deg, #212b39 0%, #161d27 100%);
     border-right: 1px solid var(--border);
     display: flex; flex-direction: column;
     position: sticky; top: 0; height: 100vh;
   }
   .brand {
-    padding: 18px 18px 16px; border-bottom: 1px solid var(--border);
-    display: flex; align-items: center; gap: 11px;
+    padding: 20px 18px 16px; border-bottom: 1px solid var(--border);
+    display: flex; flex-direction: column; align-items: flex-start; gap: 12px;
   }
+  /* Official NTEC horizontal logo (4C, white text) — reversed variant for dark
+     surfaces per brand guide. Min digital width 85px; shown at 176px with the
+     clear space the border/padding provide. Do not recolor, stretch, or crop. */
   .brand .logo {
-    width: 38px; height: 38px; border-radius: 9px; flex: 0 0 auto;
-    background: linear-gradient(135deg, var(--accent) 0%, var(--brand) 100%);
-    display: grid; place-items: center; font-weight: 800; color: #17110a;
-    font-size: 15px; letter-spacing: .5px; box-shadow: var(--shadow);
+    width: 176px; max-width: 100%; height: auto; display: block;
   }
-  .brand h1 { font-size: 14px; margin: 0; font-weight: 700; letter-spacing: .3px; }
+  .brand .app-name { padding-left: 2px; }
+  .brand h1 { font-size: 14px; margin: 0; font-weight: 600; letter-spacing: .3px; color: var(--text); }
   .brand .sub { font-size: 10.5px; color: var(--text-faint); letter-spacing: .8px; text-transform: uppercase; }
 
   .nav { padding: 12px 10px; display: flex; flex-direction: column; gap: 2px; flex: 1; }
@@ -73,7 +100,7 @@
     margin-left: auto; font-size: 11px; background: var(--panel-2); color: var(--text-dim);
     padding: 1px 7px; border-radius: 10px; min-width: 20px; text-align: center;
   }
-  .nav button.active .count { background: var(--accent); color: #17110a; font-weight: 700; }
+  .nav button.active .count { background: var(--accent); color: #211e1f; font-weight: 700; }
   .nav .alertcount { background: var(--red) !important; color: #fff !important; font-weight: 700; }
 
   .sidebar-foot { padding: 12px 16px; border-top: 1px solid var(--border); font-size: 11px; color: var(--text-faint); }
@@ -100,7 +127,7 @@
     display: inline-flex; align-items: center; gap: 7px; transition: filter .12s, background .12s;
   }
   .btn:hover { background: var(--panel); }
-  .btn.primary { background: linear-gradient(135deg, var(--accent) 0%, var(--brand-2) 100%); border-color: transparent; color: #17110a; }
+  .btn.primary { background: linear-gradient(135deg, var(--accent) 0%, var(--brand-2) 100%); border-color: transparent; color: #211e1f; }
   .btn.primary:hover { filter: brightness(1.07); }
   .btn.ghost { background: transparent; }
   .btn.sm { padding: 6px 11px; font-size: 12.5px; }
@@ -141,7 +168,7 @@
     font-size: 12px; padding: 5px 11px; border-radius: 20px; border: 1px solid var(--border);
     background: var(--panel); color: var(--text-dim);
   }
-  .chip.on { background: var(--accent); border-color: transparent; color: #17110a; font-weight: 700; }
+  .chip.on { background: var(--accent); border-color: transparent; color: #211e1f; font-weight: 700; }
   .table-wrap { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; background: var(--panel); }
   table { width: 100%; border-collapse: collapse; }
   thead th {
@@ -163,19 +190,20 @@
 
   .badge { display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; font-weight: 600; padding: 3px 9px; border-radius: 20px; white-space: nowrap; }
   .badge::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
-  .b-active { color: #58d38a; background: rgba(63,174,106,.13); }
-  .b-pending { color: #e0b452; background: rgba(217,164,65,.14); }
-  .b-expired { color: #ea7a7a; background: rgba(217,87,87,.14); }
-  .b-negotiation { color: #6fb0ea; background: rgba(63,127,191,.16); }
-  .b-hbp { color: #b79cf0; background: rgba(150,110,230,.15); }
-  .b-terminated { color: #9aa7b4; background: rgba(120,140,160,.14); }
+  /* Status badges — NTEC secondary palette (Sage/Amber/Sky/Mauve/Steel), lightened for dark bg */
+  .b-active { color: #9cc199; background: rgba(108,136,106,.18); }
+  .b-pending { color: #e0b452; background: rgba(224,164,88,.15); }
+  .b-expired { color: #ea8a80; background: rgba(224,106,94,.16); }
+  .b-negotiation { color: #8fcdea; background: rgba(105,189,226,.15); }
+  .b-hbp { color: #c2a7bb; background: rgba(155,119,147,.18); }
+  .b-terminated { color: #9aa7b4; background: rgba(73,106,150,.16); }
 
   .type-tag { font-size: 11.5px; color: var(--text-dim); }
   .type-tag .dot { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 6px; vertical-align: middle; }
 
   .rem-flag { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 6px; }
   .rem-over { color: #fff; background: var(--red); }
-  .rem-soon { color: #17110a; background: var(--amber); }
+  .rem-soon { color: #211e1f; background: var(--amber); }
   .rem-ok { color: var(--text-dim); background: var(--panel-2); }
 
   .empty { padding: 50px; text-align: center; color: var(--text-faint); }
@@ -269,9 +297,11 @@
   <!-- Sidebar -->
   <aside class="sidebar">
     <div class="brand">
-      <div class="logo">NL</div>
-      <div>
-        <h1>NTEC LandDesk</h1>
+      <img class="logo"
+           src="design-system/assets/logos/horizontal/png/23-NEH-08761 - NTEC Logo-Suite_Horizontal-4C -WhiteText.png"
+           alt="Navajo Transitional Energy Company" />
+      <div class="app-name">
+        <h1>LandDesk</h1>
         <div class="sub">Land &amp; Contracts</div>
       </div>
     </div>
@@ -444,17 +474,20 @@
    Self-contained: data persists in localStorage.
    ============================================================ */
 
+// Record-type data-viz colors drawn from the NTEC secondary palette
+// (design-standards.md recommends Steel → Sage → Mauve → Sky → Orange order);
+// entries beyond the five named colors use tints within the brand family.
 const RECORD_TYPES = [
-  { v: "Coal Lease",          c: "#5b6b7a" },
-  { v: "Oil & Gas Lease",     c: "#3fae6a" },
-  { v: "Mineral Lease",       c: "#c8862b" },
-  { v: "Surface Lease",       c: "#b5793a" },
-  { v: "Right-of-Way (ROW)",  c: "#3f7fbf" },
-  { v: "Easement",            c: "#6a8fd4" },
-  { v: "Grazing Permit",      c: "#8aa62b" },
-  { v: "Royalty Agreement",   c: "#d99a3f" },
-  { v: "Water Agreement",     c: "#2bb0b0" },
-  { v: "Access / Land Use",   c: "#9a72d0" },
+  { v: "Coal Lease",          c: "#496a96" },   /* Steel  */
+  { v: "Oil & Gas Lease",     c: "#6c886a" },   /* Sage   */
+  { v: "Mineral Lease",       c: "#9b7793" },   /* Mauve  */
+  { v: "Surface Lease",       c: "#d8c9a3" },   /* Sand   */
+  { v: "Right-of-Way (ROW)",  c: "#69bde2" },   /* Sky    */
+  { v: "Easement",            c: "#5a8fb0" },   /* Steel/Sky blend */
+  { v: "Grazing Permit",      c: "#8ca36b" },   /* Sage tint */
+  { v: "Royalty Agreement",   c: "#da6227" },   /* Orange */
+  { v: "Water Agreement",     c: "#7fb3c9" },   /* Sky, muted */
+  { v: "Access / Land Use",   c: "#b394ac" },   /* Mauve tint */
 ];
 const STATUSES = ["Active", "Pending", "In Negotiation", "Held by Production", "Expired", "Terminated"];
 const STATUS_CLASS = {
@@ -813,7 +846,7 @@ function renderReminders() {
 
   const section = (title, list, color) => `
     <div class="panel" style="margin-bottom:18px;">
-      <div class="ph"><h3>${title}</h3><span class="count" style="margin-left:auto;background:${color};color:#17110a;font-weight:700;padding:1px 9px;border-radius:10px;font-size:12px;">${list.length}</span></div>
+      <div class="ph"><h3>${title}</h3><span class="count" style="margin-left:auto;background:${color};color:#211e1f;font-weight:700;padding:1px 9px;border-radius:10px;font-size:12px;">${list.length}</span></div>
       <div class="pb">${list.length ? list.map(x => reminderItem(x.r, x.s)).join("") : `<div class="empty" style="padding:26px;">Nothing here.</div>`}</div>
     </div>`;
 
