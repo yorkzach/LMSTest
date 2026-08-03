@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NTEC Style Guide — Plain CSS Examples</title>
+  <link rel="stylesheet" href="../css/ntec-tokens.css">
+  <link rel="stylesheet" href="../css/ntec-components.css">
+  <style>
+    /* Page-specific demo styles only. Production apps should NOT use these. */
+    .demo-section { padding: var(--ntec-space-12) 0; border-bottom: 1px solid var(--ntec-border-subtle); }
+    .demo-section:last-child { border-bottom: none; }
+    .demo-row { display: flex; flex-wrap: wrap; gap: var(--ntec-space-3); align-items: center; margin-bottom: var(--ntec-space-4); }
+    .demo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: var(--ntec-space-4); }
+    .swatch { border-radius: var(--ntec-radius-md); overflow: hidden; box-shadow: var(--ntec-shadow-sm); }
+    .swatch__chip { height: 96px; }
+    .swatch__meta { padding: var(--ntec-space-3); background: var(--ntec-bg-base); font-size: var(--ntec-text-sm); }
+    .swatch__meta strong { display: block; font-family: var(--ntec-font-display); margin-bottom: var(--ntec-space-1); }
+    .swatch__meta code { font-size: var(--ntec-text-xs); background: transparent; padding: 0; }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================ NAV -->
+  <nav class="ntec-navbar">
+    <div class="ntec-navbar__brand">
+      <img src="../assets/logos/horizontal/png/23-NEH-08761 - NTEC Logo-Suite_Horizontal-4C.png"
+           alt="Navajo Transitional Energy Company">
+    </div>
+    <ul class="ntec-navbar__links">
+      <li><a href="#typography" aria-current="page">Typography</a></li>
+      <li><a href="#colors">Colors</a></li>
+      <li><a href="#buttons">Buttons</a></li>
+      <li><a href="#forms">Forms</a></li>
+      <li><a href="#cards">Cards</a></li>
+      <li><a href="#tables">Tables</a></li>
+      <li><a href="#alerts">Alerts</a></li>
+    </ul>
+    <span class="ntec-navbar__spacer"></span>
+    <a href="logos.html" class="ntec-btn ntec-btn--outline ntec-btn--sm">View logos</a>
+  </nav>
+
+  <main class="ntec-container">
+
+    <!-- ============================================================ HERO -->
+    <section class="demo-section">
+      <div class="ntec-eyebrow">Energy · Community · Environment</div>
+      <h1>NTEC Style Guide</h1>
+      <p class="ntec-lead">
+        Baseline visual identity, tokens, and components for internal Navajo
+        Transitional Energy Company web apps. Built from the May 2024 NTEC
+        Brand Standards Guideline. Drop the CSS into any project to get a
+        consistent NTEC look out of the box.
+      </p>
+      <div class="demo-row">
+        <a href="#components" class="ntec-btn ntec-btn--primary">View components</a>
+        <a href="../README.md" class="ntec-btn ntec-btn--outline">Read the docs</a>
+      </div>
+    </section>
+
+    <!-- ============================================================ TYPOGRAPHY -->
+    <section id="typography" class="demo-section">
+      <div class="ntec-eyebrow">Typography</div>
+      <h2>Franklin Gothic Medium + Calibri</h2>
+      <p class="ntec-lead">
+        Brand fonts per the NTEC Brand Standards Guideline. Falls back to
+        Arial Narrow / Segoe UI on systems without them installed.
+      </p>
+
+      <div class="ntec-card">
+        <h1>Heading 1 — Display</h1>
+        <h2>Heading 2 — Section</h2>
+        <h3>Heading 3 — Subsection</h3>
+        <h4>Heading 4</h4>
+        <h5>Heading 5</h5>
+        <h6>Heading 6 — Eyebrow style</h6>
+        <p>
+          Body text uses Calibri. Lorem ipsum dolor sit amet, consectetur adipiscing
+          elit. Navajo Transitional Energy Company was founded on four core values that
+          illustrate its commitment to the Navajo Nation, employees, and the communities
+          in which it operates. <a href="#">This is a link</a> inside a paragraph.
+        </p>
+        <p class="ntec-lead">
+          Lead paragraph — slightly larger and softer for intros and key statements.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================ COLORS -->
+    <section id="colors" class="demo-section">
+      <div class="ntec-eyebrow">Color</div>
+      <h2>Brand palette</h2>
+      <p>Primary 4 form the NTEC logo; secondary 5 support data viz and richer layouts.</p>
+
+      <h3 class="ntec-h5" style="margin-top: var(--ntec-space-8)">Primary</h3>
+      <div class="demo-grid">
+        <div class="swatch">
+          <div class="swatch__chip" style="background: #211E1F"></div>
+          <div class="swatch__meta">
+            <strong>Neutral Black</strong>
+            <code>#211E1F</code><br>
+            <code>RGB 33, 30, 31</code><br>
+            <code>PMS Neutral Black C</code>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch__chip" style="background: #DA6227"></div>
+          <div class="swatch__meta">
+            <strong>NTEC Orange</strong>
+            <code>#DA6227</code><br>
+            <code>RGB 218, 98, 39</code><br>
+            <code>PMS 1655 C</code>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch__chip" style="background: #D8C9A3"></div>
+          <div class="swatch__meta">
+            <strong>Sand</strong>
+            <code>#D8C9A3</code><br>
+            <code>RGB 216, 201, 163</code><br>
+            <code>PMS 7527 C</code>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch__chip" style="background: #69BDE2"></div>
+          <div class="swatch__meta">
+            <strong>Sky</strong>
+            <code>#69BDE2</code><br>
+            <code>RGB 105, 189, 226</code><br>
+            <code>PMS 2915 C</code>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="ntec-h5" style="margin-top: var(--ntec-space-8)">Secondary</h3>
+      <div class="demo-grid">
+        <div class="swatch">
+          <div class="swatch__chip" style="background: #496A96"></div>
+          <div class="swatch__meta"><strong>Steel</strong><code>#496A96</code> · PMS 7683 C</div>
+        </div>
+        <div class="swatch">
+          <div class="swatch__chip" style="background: #2D3949"></div>
+          <div class="swatch__meta"><strong>Navy</strong><code>#2D3949</code> · PMS 433 C</div>
+        </div>
+        <div class="swatch">
+          <div class="swatch__chip" style="background: #31261D"></div>
+          <div class="swatch__meta"><strong>Brown</strong><code>#31261D</code> · PMS Black 4 C</div>
+        </div>
+        <div class="swatch">
+          <div class="swatch__chip" style="background: #6C886A"></div>
+          <div class="swatch__meta"><strong>Sage</strong><code>#6C886A</code> · PMS 2407 C</div>
+        </div>
+        <div class="swatch">
+          <div class="swatch__chip" style="background: #9B7793"></div>
+          <div class="swatch__meta"><strong>Mauve</strong><code>#9B7793</code> · PMS 5145 C</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ BUTTONS -->
+    <section id="buttons" class="demo-section">
+      <div class="ntec-eyebrow">Component</div>
+      <h2>Buttons</h2>
+      <p>Use Primary (Orange) sparingly — one per view to anchor the main action. Secondary (Navy) for high-priority actions that aren't the main CTA.</p>
+
+      <div class="demo-row">
+        <button class="ntec-btn ntec-btn--primary">Primary</button>
+        <button class="ntec-btn ntec-btn--secondary">Secondary</button>
+        <button class="ntec-btn ntec-btn--outline">Outline</button>
+        <button class="ntec-btn ntec-btn--ghost">Ghost</button>
+        <button class="ntec-btn ntec-btn--primary" disabled>Disabled</button>
+      </div>
+      <div class="demo-row">
+        <button class="ntec-btn ntec-btn--primary ntec-btn--sm">Small</button>
+        <button class="ntec-btn ntec-btn--primary">Default</button>
+        <button class="ntec-btn ntec-btn--primary ntec-btn--lg">Large</button>
+      </div>
+    </section>
+
+    <!-- ============================================================ FORMS -->
+    <section id="forms" class="demo-section">
+      <div class="ntec-eyebrow">Component</div>
+      <h2>Forms</h2>
+
+      <div class="ntec-card" style="max-width: 560px">
+        <form onsubmit="event.preventDefault(); alert('Demo only.');">
+          <div class="ntec-field">
+            <label class="ntec-label ntec-label--required" for="full-name">Full name</label>
+            <input class="ntec-input" id="full-name" type="text" placeholder="Jane Smith" required>
+            <span class="ntec-help">As shown on your NTEC ID.</span>
+          </div>
+
+          <div class="ntec-field">
+            <label class="ntec-label" for="email">Email</label>
+            <input class="ntec-input" id="email" type="email" placeholder="name@navenergy.com">
+          </div>
+
+          <div class="ntec-field">
+            <label class="ntec-label" for="site">Site</label>
+            <select class="ntec-select" id="site">
+              <option>Navajo Mine</option>
+              <option>Antelope Mine</option>
+              <option>Cordero Rojo Mine</option>
+              <option>Spring Creek Mine</option>
+            </select>
+          </div>
+
+          <div class="ntec-field">
+            <label class="ntec-label" for="notes">Notes</label>
+            <textarea class="ntec-textarea" id="notes" placeholder="Add any context..."></textarea>
+          </div>
+
+          <div class="ntec-field">
+            <label class="ntec-label" for="bad">Field with error</label>
+            <input class="ntec-input ntec-input--error" id="bad" type="text" value="invalid value" aria-invalid="true">
+            <span class="ntec-error">This field is required.</span>
+          </div>
+
+          <div class="ntec-field">
+            <label class="ntec-checkbox">
+              <input type="checkbox" checked>
+              <span>I have read the brand guidelines</span>
+            </label>
+          </div>
+
+          <div class="demo-row" style="margin-top: var(--ntec-space-6)">
+            <button class="ntec-btn ntec-btn--primary" type="submit">Submit</button>
+            <button class="ntec-btn ntec-btn--ghost" type="button">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ============================================================ CARDS -->
+    <section id="cards" class="demo-section">
+      <div class="ntec-eyebrow">Component</div>
+      <h2>Cards</h2>
+
+      <div class="demo-grid">
+        <div class="ntec-card">
+          <div class="ntec-card__header">
+            <h3 class="ntec-card__title">Standard card</h3>
+            <span class="ntec-badge">Active</span>
+          </div>
+          <div class="ntec-card__body">
+            <p>Default card style with subtle border and shadow. Use for grouping related information.</p>
+          </div>
+        </div>
+
+        <div class="ntec-card ntec-card--accent">
+          <div class="ntec-card__header">
+            <h3 class="ntec-card__title">Accent card</h3>
+            <span class="ntec-badge ntec-badge--orange">Priority</span>
+          </div>
+          <div class="ntec-card__body">
+            <p>Orange top border anchors this to the NTEC brand without overwhelming the layout.</p>
+          </div>
+          <div class="ntec-card__footer">
+            <button class="ntec-btn ntec-btn--primary ntec-btn--sm">Action</button>
+            <button class="ntec-btn ntec-btn--ghost ntec-btn--sm">Cancel</button>
+          </div>
+        </div>
+
+        <div class="ntec-card ntec-card--elevated">
+          <div class="ntec-card__header">
+            <h3 class="ntec-card__title">Elevated card</h3>
+          </div>
+          <div class="ntec-card__body">
+            <p>For floating panels or content that needs more visual prominence.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ TABLES -->
+    <section id="tables" class="demo-section">
+      <div class="ntec-eyebrow">Component</div>
+      <h2>Tables</h2>
+
+      <table class="ntec-table">
+        <thead>
+          <tr>
+            <th>Site</th>
+            <th>State</th>
+            <th>Type</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Navajo Mine</td>
+            <td>New Mexico</td>
+            <td>Surface coal</td>
+            <td><span class="ntec-badge ntec-badge--success">Operating</span></td>
+          </tr>
+          <tr>
+            <td>Antelope Mine</td>
+            <td>Wyoming</td>
+            <td>Surface coal</td>
+            <td><span class="ntec-badge ntec-badge--success">Operating</span></td>
+          </tr>
+          <tr>
+            <td>Cordero Rojo Mine</td>
+            <td>Wyoming</td>
+            <td>Surface coal</td>
+            <td><span class="ntec-badge ntec-badge--success">Operating</span></td>
+          </tr>
+          <tr>
+            <td>Spring Creek Mine</td>
+            <td>Montana</td>
+            <td>Surface coal</td>
+            <td><span class="ntec-badge ntec-badge--success">Operating</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ============================================================ ALERTS -->
+    <section id="alerts" class="demo-section">
+      <div class="ntec-eyebrow">Component</div>
+      <h2>Alerts</h2>
+
+      <div class="ntec-stack">
+        <div class="ntec-alert ntec-alert--info">
+          <div>
+            <p class="ntec-alert__title">Heads up</p>
+            <p class="ntec-alert__body">The brand guidelines were last revised in May 2024. Check Communications for the latest version before publishing externally.</p>
+          </div>
+        </div>
+        <div class="ntec-alert ntec-alert--success">
+          <div>
+            <p class="ntec-alert__title">Saved</p>
+            <p class="ntec-alert__body">Your changes were saved to the project.</p>
+          </div>
+        </div>
+        <div class="ntec-alert ntec-alert--warning">
+          <div>
+            <p class="ntec-alert__title">Approaching limit</p>
+            <p class="ntec-alert__body">You've used 80% of your monthly quota.</p>
+          </div>
+        </div>
+        <div class="ntec-alert ntec-alert--danger">
+          <div>
+            <p class="ntec-alert__title">Something went wrong</p>
+            <p class="ntec-alert__body">Could not save changes. Please retry.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ BADGES -->
+    <section class="demo-section">
+      <div class="ntec-eyebrow">Component</div>
+      <h2>Badges</h2>
+      <div class="demo-row">
+        <span class="ntec-badge">Default</span>
+        <span class="ntec-badge ntec-badge--orange">Brand</span>
+        <span class="ntec-badge ntec-badge--navy">Navy</span>
+        <span class="ntec-badge ntec-badge--success">Operating</span>
+        <span class="ntec-badge ntec-badge--warning">Watching</span>
+        <span class="ntec-badge ntec-badge--danger">Down</span>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================================ FOOTER -->
+  <footer class="ntec-footer">
+    <div class="ntec-container">
+      <img src="../assets/logos/horizontal/png/23-NEH-08761 - NTEC Logo-Suite_Horizontal-4C -WhiteText.png"
+           alt="Navajo Transitional Energy Company"
+           style="height: 40px; width: auto;">
+      <p class="ntec-footer__tagline">Energy · Community · Environment</p>
+      <p style="margin-top: var(--ntec-space-6); font-size: var(--ntec-text-xs); color: var(--ntec-color-gray-400);">
+        &copy; Navajo Transitional Energy Company. Internal style guide — not for public distribution.
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>

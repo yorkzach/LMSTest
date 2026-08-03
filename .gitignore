@@ -1,3 +1,36 @@
+# Secrets — never commit (see standards/security.md)
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+secrets/
+
+# Dependencies / build output
 node_modules/
+dist/
+build/
+.cache/
+
+# Logs
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS / editor
 .DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp
+*~
+
+# Local tooling / scratch
+.playwright-mcp/
+*_verify_shot.png
+
+# Do not commit the bootstrap standards archive or other large drop-ins
+NavEnergy-Application-Bootstrap-main.zip
+*.zip

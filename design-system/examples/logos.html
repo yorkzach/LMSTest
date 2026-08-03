@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NTEC Logo Library</title>
+  <link rel="stylesheet" href="../css/ntec-tokens.css">
+  <link rel="stylesheet" href="../css/ntec-components.css">
+  <style>
+    .logo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: var(--ntec-space-6);
+      margin-bottom: var(--ntec-space-12);
+    }
+    .logo-tile {
+      background: var(--ntec-bg-base);
+      border: 1px solid var(--ntec-border-subtle);
+      border-radius: var(--ntec-radius-lg);
+      padding: var(--ntec-space-6);
+      display: flex;
+      flex-direction: column;
+      gap: var(--ntec-space-3);
+    }
+    .logo-tile--dark { background: var(--ntec-color-black); }
+    .logo-tile--sand { background: var(--ntec-color-sand); }
+    .logo-tile--sky  { background: var(--ntec-color-sky); }
+    .logo-tile img {
+      max-width: 100%;
+      height: auto;
+      align-self: center;
+    }
+    .logo-tile__caption {
+      font-family: var(--ntec-font-display);
+      font-size: var(--ntec-text-sm);
+      text-transform: uppercase;
+      letter-spacing: var(--ntec-tracking-wider);
+      color: var(--ntec-text-secondary);
+    }
+    .logo-tile--dark .logo-tile__caption { color: var(--ntec-color-gray-300); }
+    .demo-section { padding: var(--ntec-space-12) 0; border-bottom: 1px solid var(--ntec-border-subtle); }
+  </style>
+</head>
+<body>
+  <nav class="ntec-navbar">
+    <div class="ntec-navbar__brand">
+      <img src="../assets/logos/horizontal/png/23-NEH-08761 - NTEC Logo-Suite_Horizontal-4C.png"
+           alt="Navajo Transitional Energy Company">
+    </div>
+    <ul class="ntec-navbar__links">
+      <li><a href="index.html">Components</a></li>
+      <li><a href="logos.html" aria-current="page">Logos</a></li>
+    </ul>
+  </nav>
+
+  <main class="ntec-container">
+
+    <section class="demo-section">
+      <div class="ntec-eyebrow">Brand</div>
+      <h1>Logo library</h1>
+      <p class="ntec-lead">
+        Every approved logo variant from the May 2024 brand suite. These files are
+        copied verbatim — never alter, redraw, or recolor a logo. If the variant you
+        need isn't here, contact Communications.
+      </p>
+
+      <div class="ntec-alert ntec-alert--info">
+        <div>
+          <p class="ntec-alert__title">Minimum size</p>
+          <p class="ntec-alert__body">85px wide for digital. 1.5" wide for print. Below these sizes the wordmark loses legibility.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section">
+      <h2>Horizontal</h2>
+      <p>Preferred when vertical space is constrained — headers, signatures, narrow imprint areas.</p>
+      <div class="logo-grid">
+        <div class="logo-tile">
+          <img src="../assets/logos/horizontal/png/23-NEH-08761 - NTEC Logo-Suite_Horizontal-4C.png" alt="NTEC horizontal full color">
+          <span class="logo-tile__caption">4C — Preferred</span>
+        </div>
+        <div class="logo-tile">
+          <img src="../assets/logos/horizontal/png/23-NEH-08761 - NTEC Logo-Suite_Horizontal-4C-Blue.png" alt="NTEC horizontal blue">
+          <span class="logo-tile__caption">4C Blue</span>
+        </div>
+        <div class="logo-tile logo-tile--dark">
+          <img src="../assets/logos/horizontal/png/23-NEH-08761 - NTEC Logo-Suite_Horizontal-4C-Blue-WhiteText.png" alt="NTEC horizontal blue, white text">
+          <span class="logo-tile__caption">4C Blue / White text</span>
+        </div>
+        <div class="logo-tile logo-tile--dark">
+          <img src="../assets/logos/horizontal/png/23-NEH-08761 - NTEC Logo-Suite_Horizontal-4C -WhiteText.png" alt="NTEC horizontal 4C white text reversed">
+          <span class="logo-tile__caption">4C / White text (reversed)</span>
+        </div>
+        <div class="logo-tile">
+          <img src="../assets/logos/horizontal/png/23-NEH-08761 - NTEC Logo-Suite_Horizontal-Greyscale.png" alt="NTEC horizontal greyscale">
+          <span class="logo-tile__caption">Greyscale</span>
+        </div>
+        <div class="logo-tile">
+          <img src="../assets/logos/horizontal/png/23-NEH-08761 - NTEC Logo-Suite_Horizontal-1C-Black.png" alt="NTEC horizontal 1C black">
+          <span class="logo-tile__caption">1C Black</span>
+        </div>
+        <div class="logo-tile logo-tile--dark">
+          <img src="../assets/logos/horizontal/png/23-NEH-08761 - NTEC Logo-Suite_Horizontal-1C-White.png" alt="NTEC horizontal 1C white">
+          <span class="logo-tile__caption">1C White</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section">
+      <h2>Vertical</h2>
+      <p>Preferred orientation per the brand guide. Use whenever layout allows.</p>
+      <div class="logo-grid">
+        <div class="logo-tile">
+          <img src="../assets/logos/vertical/png/23-NEH-08761 - NTEC Logo-Suite_Vertical-4C.png" alt="NTEC vertical full color" style="max-height: 160px">
+          <span class="logo-tile__caption">4C — Preferred</span>
+        </div>
+        <div class="logo-tile">
+          <img src="../assets/logos/vertical/png/23-NEH-08761 - NTEC Logo-Suite_Vertical-4C-Blue.png" alt="NTEC vertical blue" style="max-height: 160px">
+          <span class="logo-tile__caption">4C Blue</span>
+        </div>
+        <div class="logo-tile logo-tile--dark">
+          <img src="../assets/logos/vertical/png/23-NEH-08761 - NTEC Logo-Suite_Vertical-4C-Blue-WhiteText.png" alt="NTEC vertical blue, white text" style="max-height: 160px">
+          <span class="logo-tile__caption">4C Blue / White text</span>
+        </div>
+        <div class="logo-tile logo-tile--dark">
+          <img src="../assets/logos/vertical/png/23-NEH-08761 - NTEC Logo-Suite_Vertical-4C-WhiteText.png" alt="NTEC vertical 4C white text reversed" style="max-height: 160px">
+          <span class="logo-tile__caption">4C / White text (reversed)</span>
+        </div>
+        <div class="logo-tile">
+          <img src="../assets/logos/vertical/png/23-NEH-08761 - NTEC Logo-Suite_Vertical-Greyscale.png" alt="NTEC vertical greyscale" style="max-height: 160px">
+          <span class="logo-tile__caption">Greyscale</span>
+        </div>
+        <div class="logo-tile">
+          <img src="../assets/logos/vertical/png/23-NEH-08761 - NTEC Logo-Suite_Vertical-1C-Black.png" alt="NTEC vertical 1C black" style="max-height: 160px">
+          <span class="logo-tile__caption">1C Black</span>
+        </div>
+        <div class="logo-tile logo-tile--dark">
+          <img src="../assets/logos/vertical/png/23-NEH-08761 - NTEC Logo-Suite_Vertical-1C-White.png" alt="NTEC vertical 1C white" style="max-height: 160px">
+          <span class="logo-tile__caption">1C White</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section">
+      <h2>Mine co-brand logos</h2>
+      <p>
+        NTEC logo with mine name below. Use for site-specific materials. Clear space is
+        <strong>doubled</strong> compared to the standard NTEC logo. Never use the mine
+        name without the NTEC logo on externally facing items without Communications approval.
+      </p>
+      <div class="logo-grid">
+        <div class="logo-tile">
+          <img src="../assets/logos/mines/png/23-NEH-08761 - NTEC Logo-Suite-2017_Colors_Vertical-4C-Navajo Mine.png" alt="NTEC Navajo Mine" style="max-height: 200px">
+          <span class="logo-tile__caption">Navajo Mine</span>
+        </div>
+        <div class="logo-tile">
+          <img src="../assets/logos/mines/png/23-NEH-08761 - NTEC Logo-Suite-2017_Colors_Vertical-4C-Antelope Mine.png" alt="NTEC Antelope Mine" style="max-height: 200px">
+          <span class="logo-tile__caption">Antelope Mine</span>
+        </div>
+        <div class="logo-tile">
+          <img src="../assets/logos/mines/png/23-NEH-08761 - NTEC Logo-Suite-2017_Colors_Vertical-4C-Cordero Rojo Mine.png" alt="NTEC Cordero Rojo Mine" style="max-height: 200px">
+          <span class="logo-tile__caption">Cordero Rojo Mine</span>
+        </div>
+        <div class="logo-tile">
+          <img src="../assets/logos/mines/png/23-NEH-08761 - NTEC Logo-Suite-2017_Colors_Vertical-4C-Spring Creek Mine.png" alt="NTEC Spring Creek Mine" style="max-height: 200px">
+          <span class="logo-tile__caption">Spring Creek Mine</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section">
+      <h2>Background safety</h2>
+      <p>How variants pair with different backgrounds. Always pick the version that maintains contrast — never put a white box around the color logo, use the reversed version instead.</p>
+      <div class="logo-grid">
+        <div class="logo-tile">
+          <img src="../assets/logos/horizontal/png/23-NEH-08761 - NTEC Logo-Suite_Horizontal-4C.png" alt="" style="max-height: 80px">
+          <span class="logo-tile__caption">On white — 4C</span>
+        </div>
+        <div class="logo-tile logo-tile--sand">
+          <img src="../assets/logos/horizontal/png/23-NEH-08761 - NTEC Logo-Suite_Horizontal-4C.png" alt="" style="max-height: 80px">
+          <span class="logo-tile__caption">On sand — 4C OK</span>
+        </div>
+        <div class="logo-tile logo-tile--sky">
+          <img src="../assets/logos/horizontal/png/23-NEH-08761 - NTEC Logo-Suite_Horizontal-4C.png" alt="" style="max-height: 80px">
+          <span class="logo-tile__caption">On sky — 4C OK</span>
+        </div>
+        <div class="logo-tile logo-tile--dark">
+          <img src="../assets/logos/horizontal/png/23-NEH-08761 - NTEC Logo-Suite_Horizontal-1C-White.png" alt="" style="max-height: 80px">
+          <span class="logo-tile__caption">On black — 1C white (reversed)</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</body>
+</html>
