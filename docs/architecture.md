@@ -49,7 +49,7 @@ flowchart TD
 | GIS / PLSS | Parses legal descriptions (`T29N R16W Sec 4–9…`) into township + section lists and renders a 6×6 section grid. |
 | Documents | In-app PDF viewer over embedded data URIs; drag-and-drop intake. |
 | PDF auto-fill | In-browser text extraction (uncompressed + FlateDecode via `DecompressionStream`); heuristic field mapping into the intake form. |
-| Theme | NTEC design tokens (dark theme) sourced from `design-system/`. |
+| Theme | NTEC design tokens (light theme) sourced from `design-system/`. |
 
 ## Notable technical decisions
 

@@ -6,13 +6,13 @@
 <title>NTEC Land Management System</title>
 <style>
   /* ==========================================================================
-     NTEC design tokens — dark UI theme built from the official NTEC palette.
+     NTEC design tokens — light UI theme built from the official NTEC palette.
      Source of truth: design-system/css/ntec-tokens.css (NTEC Brand Standards
      Guideline, May 2024). Primary palette: Orange #DA6227, Sky #69BDE2,
      Sand #D8C9A3, Black #211E1F. Secondary: Steel #496A96, Navy #2D3949,
-     Brown #31261D, Sage #6C886A, Mauve #9B7793.
-     The brand guide does not define a dark mode; surfaces below are anchored to
-     the NTEC Navy family and accents use the primary palette verbatim.
+     Brown #31261D, Sage #6C886A, Mauve #9B7793. Surfaces use the NTEC neutral
+     scale; links/focus use Steel (Sky fails AA as text on white), and status
+     colors use the design system's light-surface values.
      ========================================================================== */
   :root {
     /* Fonts — brand-mandated Franklin Gothic Medium (display) + Calibri (body) */
@@ -21,31 +21,31 @@
     --font-body: Calibri, "Carlito", "Segoe UI", Tahoma,
                  "Helvetica Neue", Helvetica, Arial, sans-serif;
 
-    /* Surfaces — NTEC Navy family */
-    --bg: #1a222e;          /* darkened navy */
-    --bg-2: #212b39;
-    --panel: #2d3949;       /* NTEC Navy (Pantone 433 C) */
-    --panel-2: #374559;
-    --border: #3e4e63;
+    /* Surfaces — NTEC neutral scale (warm, anchored to brand black) */
+    --bg: #f1efeb;          /* app canvas (gray-100/50 blend) */
+    --bg-2: #f7f6f4;        /* topbar / table headers (gray-50) */
+    --panel: #ffffff;       /* cards, panels */
+    --panel-2: #eceae6;     /* subtle raised chips / hover (gray-100) */
+    --border: #d9d6d0;      /* gray-200 */
 
-    /* Text — near-white on dark */
-    --text: #f5f3ef;
-    --text-dim: #b9c0cb;
-    --text-faint: #8a94a2;
+    /* Text — dark on light */
+    --text: #211e1f;        /* brand black */
+    --text-dim: #4d4946;    /* gray-600 */
+    --text-faint: #6a6661;  /* gray-500 */
 
     /* Accents — NTEC primary palette */
     --accent: #da6227;      /* NTEC Orange (Pantone 1655 C) — primary CTA */
-    --accent-2: #e1743d;    /* orange, lightened for hover */
+    --accent-2: #c2531f;    /* orange, darkened for hover */
     --brand: #c2531f;       /* orange, darkened (action-primary-active) */
     --brand-2: #da6227;
-    --sky: #69bde2;         /* NTEC Sky (Pantone 2915 C) — links, focus */
+    --sky: #496a96;         /* Steel — links/accents (AA-safe on white) */
 
-    /* Status — palette-derived, lightened for legibility on dark surfaces */
-    --green: #7b9e79;       /* Sage family (success) */
-    --amber: #e0a458;       /* warm amber (warning) — distinct from CTA orange */
-    --red: #e06a5e;         /* danger */
+    /* Status — design system light-surface values */
+    --green: #2f7d32;       /* success */
+    --amber: #e0a458;       /* warning (dark text on this) */
+    --red: #b42318;         /* danger (white text on this) */
 
-    --shadow: 0 2px 8px rgba(20,26,36,.5);
+    --shadow: 0 1px 3px rgba(33,30,31,.10), 0 1px 2px rgba(33,30,31,.06);
     --radius: 8px;          /* --ntec-radius-lg */
   }
   * { box-sizing: border-box; }
@@ -66,7 +66,7 @@
   /* Layout */
   .app { display: grid; grid-template-columns: 232px 1fr; min-height: 100vh; }
   .sidebar {
-    background: linear-gradient(180deg, #212b39 0%, #161d27 100%);
+    background: linear-gradient(180deg, #ffffff 0%, #f4f2ee 100%);
     border-right: 1px solid var(--border);
     display: flex; flex-direction: column;
     position: sticky; top: 0; height: 100vh;
@@ -75,9 +75,9 @@
     padding: 20px 18px 16px; border-bottom: 1px solid var(--border);
     display: flex; flex-direction: column; align-items: flex-start; gap: 12px;
   }
-  /* Official NTEC horizontal logo (4C, white text) — reversed variant for dark
-     surfaces per brand guide. Min digital width 85px; shown at 176px with the
-     clear space the border/padding provide. Do not recolor, stretch, or crop. */
+  /* Official NTEC horizontal logo (4C, dark text) for the light sidebar.
+     Min digital width 85px; shown at 176px with the clear space the
+     border/padding provide. Do not recolor, stretch, or crop. */
   .brand .logo {
     width: 176px; max-width: 100%; height: auto; display: block;
   }
@@ -190,13 +190,13 @@
 
   .badge { display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; font-weight: 600; padding: 3px 9px; border-radius: 20px; white-space: nowrap; }
   .badge::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
-  /* Status badges — NTEC secondary palette (Sage/Amber/Sky/Mauve/Steel), lightened for dark bg */
-  .b-active { color: #9cc199; background: rgba(108,136,106,.18); }
-  .b-pending { color: #e0b452; background: rgba(224,164,88,.15); }
-  .b-expired { color: #ea8a80; background: rgba(224,106,94,.16); }
-  .b-negotiation { color: #8fcdea; background: rgba(105,189,226,.15); }
-  .b-hbp { color: #c2a7bb; background: rgba(155,119,147,.18); }
-  .b-terminated { color: #9aa7b4; background: rgba(73,106,150,.16); }
+  /* Status badges — NTEC palette, tuned for AA contrast on light surfaces */
+  .b-active { color: #2f7d32; background: rgba(47,125,50,.12); }
+  .b-pending { color: #b45309; background: rgba(180,83,9,.12); }
+  .b-expired { color: #b42318; background: rgba(180,35,24,.10); }
+  .b-negotiation { color: #496a96; background: rgba(73,106,150,.12); }
+  .b-hbp { color: #7a5c73; background: rgba(155,119,147,.16); }
+  .b-terminated { color: #6a6661; background: rgba(106,102,97,.12); }
 
   .type-tag { font-size: 11.5px; color: var(--text-dim); }
   .type-tag .dot { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 6px; vertical-align: middle; }
@@ -298,7 +298,7 @@
   <aside class="sidebar">
     <div class="brand">
       <img class="logo"
-           src="design-system/assets/logos/horizontal/png/23-NEH-08761 - NTEC Logo-Suite_Horizontal-4C -WhiteText.png"
+           src="design-system/assets/logos/horizontal/png/23-NEH-08761 - NTEC Logo-Suite_Horizontal-4C.png"
            alt="Navajo Transitional Energy Company" />
       <div class="app-name">
         <h1>LandDesk</h1>
@@ -481,7 +481,7 @@ const RECORD_TYPES = [
   { v: "Coal Lease",          c: "#496a96" },   /* Steel  */
   { v: "Oil & Gas Lease",     c: "#6c886a" },   /* Sage   */
   { v: "Mineral Lease",       c: "#9b7793" },   /* Mauve  */
-  { v: "Surface Lease",       c: "#d8c9a3" },   /* Sand   */
+  { v: "Surface Lease",       c: "#bfa76f" },   /* Sand, deepened for contrast on white */
   { v: "Right-of-Way (ROW)",  c: "#69bde2" },   /* Sky    */
   { v: "Easement",            c: "#5a8fb0" },   /* Steel/Sky blend */
   { v: "Grazing Permit",      c: "#8ca36b" },   /* Sage tint */

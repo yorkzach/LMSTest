@@ -19,12 +19,12 @@ and this project aims to adhere to [Semantic Versioning](https://semver.org/).
 
 ### Changed
 - **Rebranded the UI to the official NTEC palette and typography.** Replaced the
-  ad-hoc "earthen gold / mesa brown" theme and Segoe UI with a dark theme built
-  from the NTEC Navy family, the primary palette (Orange `#DA6227`, Sky
-  `#69BDE2`, Sand `#D8C9A3`) for accents, and Franklin Gothic Medium / Calibri
-  type stacks.
+  ad-hoc "earthen gold / mesa brown" theme and Segoe UI with a light theme built
+  from the NTEC neutral scale, the primary palette (Orange `#DA6227` for CTAs,
+  Steel `#496A96` for links) for accents, and Franklin Gothic Medium / Calibri
+  type stacks. Status colors use the design system's light-surface values.
 - Replaced the placeholder "NL" logo tile with the official NTEC horizontal
-  (4C, white-text) logo, used correctly on the dark sidebar.
+  (4C) logo.
 - Re-mapped record-type data-viz colors to the NTEC secondary palette.
 - Expanded `README.md` to the NavEnergy `SOLUTION_README_TEMPLATE` shape: Owner,
   Data Classification, ARB Status, AI Tools Used, Dependencies, and a

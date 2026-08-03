@@ -152,11 +152,11 @@ portfolio-by-type breakdown.
 
 The UI uses the **official NTEC design system** vendored into `design-system/`
 (brand tokens, components, and the approved logo suite from the NTEC Brand
-Standards Guideline, May 2024). The interface is a dark theme built from the
-NTEC Navy family with the primary palette (Orange `#DA6227`, Sky `#69BDE2`,
-Sand `#D8C9A3`) for accents, Franklin Gothic Medium for display type and Calibri
-for body. See [design system README](./design-system/) and
-`docs/architecture.md`.
+Standards Guideline, May 2024). The interface is a light theme built from the
+NTEC neutral scale with the primary palette (Orange `#DA6227` for CTAs, Steel
+`#496A96` for links, plus Sky/Sand/secondary colors) for accents, Franklin
+Gothic Medium for display type and Calibri for body. See
+[design system README](./design-system/) and `docs/architecture.md`.
 
 ## Mock documents
 
