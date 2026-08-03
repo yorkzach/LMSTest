@@ -76,8 +76,12 @@ the production standards below.
 | Modern web browser | Runs the app (client-side only) | — |
 | Node.js (dev only) | Regenerates mock PDFs via `scripts/gen-docs.js` (dependency-free) | — |
 | NTEC design system (`design-system/`) | Official NTEC brand tokens, components, and logo assets — vendored in per the NavEnergy **Design Standards** | NTEC Communications / NAB |
+| Leaflet 1.9.4 (`vendor/leaflet/`) | Interactive map for the GIS view — vendored locally, not CDN | — |
+| Basemap tile providers (OpenStreetMap / OpenTopoMap / Esri) | Map tiles for the GIS view, fetched at runtime | third-party |
 
-No external network calls, CDNs, APIs, or databases at runtime.
+The only runtime network calls are basemap map tiles for the GIS view (see
+[ADR-002](./docs/decisions/ADR-002-real-map-dependency.md)). No other CDNs,
+APIs, or databases at runtime.
 
 ## Setup & Configuration
 
@@ -100,7 +104,7 @@ Opening `index.html` directly from the file system also works, except the
 sidebar logo (loaded from `design-system/`) requires serving over HTTP.
 
 To reset to the seeded demo data, clear the site's local storage or run
-`localStorage.removeItem('ntec_landdesk_v1')` in the browser console.
+`localStorage.removeItem('ntec_landdesk_v4')` in the browser console.
 
 ## How to Use
 
@@ -128,9 +132,19 @@ renewals, royalty reports, compliance filings, option deadlines, and
 reclamation milestones don't slip.
 
 ### 4. GIS / Tract Map
-A **Public Land Survey System (PLSS)** view. Each record's legal description
-(`T29N R16W Sec 4–9, 16–21`) is parsed into a township + section list and
-plotted on a 6×6 section grid, each tract shaded in its record-type color.
+An **interactive map** (Leaflet) showing each record at its approximate location
+as a marker colored by record type; click a marker for a popup and to open the
+record. Basemap switcher (Streets / Topographic / Satellite), type/status
+filters, a legend, and a "Not mapped" list for records without coordinates. A
+**Section grid** toggle switches to the original **Public Land Survey System
+(PLSS)** schematic — each record's legal description (`T29N R16W Sec 4–9, 16–21`)
+parsed into a township + section list on a 6×6 section grid. New records can be
+given coordinates in intake (type them or drop a pin on a map).
+
+> Marker positions are **approximate, illustrative demo locations — not real
+> parcel geometry**. Basemap tiles load from public providers at runtime; see
+> [ADR-002](./docs/decisions/ADR-002-real-map-dependency.md) for the production
+> caveat about tribal-land coordinates.
 
 ### 5. Documents + PDF auto-fill on intake
 Every seeded record carries **generated mock PDF instruments** that open in an

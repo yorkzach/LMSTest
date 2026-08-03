@@ -7,6 +7,16 @@ and this project aims to adhere to [Semantic Versioning](https://semver.org/).
 ## [Unreleased]
 
 ### Added
+- **Interactive map for the GIS view** (Leaflet, vendored locally at
+  `vendor/leaflet/`): records plotted as type-colored markers at seeded
+  approximate coordinates, popup → open record, basemap switcher (Streets /
+  Topographic / Satellite), type/status filters, legend, and a "Not mapped"
+  list. The original PLSS section grid is retained behind a "Section grid"
+  toggle. Intake gains optional Latitude/Longitude with a drop-a-pin helper.
+  Basemap tiles are the only runtime network dependency — see
+  [ADR-002](./docs/decisions/ADR-002-real-map-dependency.md). Storage key bumped
+  to `ntec_landdesk_v4` (records now carry `lat`/`lng`).
+
 - Vendored in the official **NTEC design system** (`design-system/`): brand
   tokens, components, and the approved logo suite (NTEC Brand Standards
   Guideline, May 2024). Web-relevant assets only (CSS + PNG logos); print
