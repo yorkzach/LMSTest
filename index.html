@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NTEC Land Management System</title>
+<style>
+  :root {
+    --bg: #0f1419;
+    --bg-2: #161d26;
+    --panel: #1c2530;
+    --panel-2: #222d3a;
+    --border: #2c3a49;
+    --text: #e6edf3;
+    --text-dim: #93a1b0;
+    --text-faint: #64748b;
+    --accent: #c8862b;      /* earthen gold */
+    --accent-2: #d99a3f;
+    --brand: #8a5a2b;       /* mesa brown */
+    --brand-2: #b5793a;
+    --sky: #3f7fbf;
+    --green: #3fae6a;
+    --amber: #d9a441;
+    --red: #d95757;
+    --shadow: 0 2px 8px rgba(0,0,0,.35);
+    --radius: 10px;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; height: 100%; }
+  body {
+    font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.45;
+  }
+  button { font-family: inherit; cursor: pointer; }
+  a { color: var(--sky); text-decoration: none; }
+
+  /* Layout */
+  .app { display: grid; grid-template-columns: 232px 1fr; min-height: 100vh; }
+  .sidebar {
+    background: linear-gradient(180deg, #131a22 0%, #0f1419 100%);
+    border-right: 1px solid var(--border);
+    display: flex; flex-direction: column;
+    position: sticky; top: 0; height: 100vh;
+  }
+  .brand {
+    padding: 18px 18px 16px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 11px;
+  }
+  .brand .logo {
+    width: 38px; height: 38px; border-radius: 9px; flex: 0 0 auto;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--brand) 100%);
+    display: grid; place-items: center; font-weight: 800; color: #17110a;
+    font-size: 15px; letter-spacing: .5px; box-shadow: var(--shadow);
+  }
+  .brand h1 { font-size: 14px; margin: 0; font-weight: 700; letter-spacing: .3px; }
+  .brand .sub { font-size: 10.5px; color: var(--text-faint); letter-spacing: .8px; text-transform: uppercase; }
+
+  .nav { padding: 12px 10px; display: flex; flex-direction: column; gap: 2px; flex: 1; }
+  .nav .label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-faint); padding: 12px 12px 6px; }
+  .nav button {
+    display: flex; align-items: center; gap: 11px; width: 100%;
+    background: transparent; border: none; color: var(--text-dim);
+    padding: 9px 12px; border-radius: 8px; text-align: left; font-size: 13.5px;
+    transition: background .12s, color .12s;
+  }
+  .nav button .ic { width: 18px; text-align: center; opacity: .9; font-size: 15px; }
+  .nav button:hover { background: var(--panel); color: var(--text); }
+  .nav button.active { background: var(--panel-2); color: var(--text); box-shadow: inset 3px 0 0 var(--accent); }
+  .nav button .count {
+    margin-left: auto; font-size: 11px; background: var(--panel-2); color: var(--text-dim);
+    padding: 1px 7px; border-radius: 10px; min-width: 20px; text-align: center;
+  }
+  .nav button.active .count { background: var(--accent); color: #17110a; font-weight: 700; }
+  .nav .alertcount { background: var(--red) !important; color: #fff !important; font-weight: 700; }
+
+  .sidebar-foot { padding: 12px 16px; border-top: 1px solid var(--border); font-size: 11px; color: var(--text-faint); }
+
+  /* Main */
+  .main { min-width: 0; display: flex; flex-direction: column; }
+  .topbar {
+    display: flex; align-items: center; gap: 14px; padding: 14px 26px;
+    border-bottom: 1px solid var(--border); background: var(--bg-2);
+    position: sticky; top: 0; z-index: 20;
+  }
+  .topbar .page-title { font-size: 17px; font-weight: 700; }
+  .topbar .page-title .muted { color: var(--text-faint); font-weight: 400; font-size: 13px; margin-left: 8px; }
+  .search-wrap { margin-left: auto; position: relative; }
+  .search-wrap input {
+    width: 320px; max-width: 40vw; background: var(--panel); border: 1px solid var(--border);
+    color: var(--text); padding: 9px 12px 9px 34px; border-radius: 8px; font-size: 13.5px;
+  }
+  .search-wrap input:focus { outline: none; border-color: var(--accent); }
+  .search-wrap .si { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); color: var(--text-faint); }
+  .btn {
+    background: var(--panel-2); border: 1px solid var(--border); color: var(--text);
+    padding: 9px 15px; border-radius: 8px; font-size: 13.5px; font-weight: 600;
+    display: inline-flex; align-items: center; gap: 7px; transition: filter .12s, background .12s;
+  }
+  .btn:hover { background: var(--panel); }
+  .btn.primary { background: linear-gradient(135deg, var(--accent) 0%, var(--brand-2) 100%); border-color: transparent; color: #17110a; }
+  .btn.primary:hover { filter: brightness(1.07); }
+  .btn.ghost { background: transparent; }
+  .btn.sm { padding: 6px 11px; font-size: 12.5px; }
+
+  .content { padding: 22px 26px 60px; overflow: auto; }
+
+  /* Cards / stats */
+  .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-bottom: 22px; }
+  .stat {
+    background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 16px 18px; position: relative; overflow: hidden;
+  }
+  .stat .k { font-size: 11px; text-transform: uppercase; letter-spacing: .8px; color: var(--text-faint); }
+  .stat .v { font-size: 28px; font-weight: 800; margin-top: 4px; letter-spacing: -.5px; }
+  .stat .d { font-size: 12px; color: var(--text-dim); margin-top: 2px; }
+  .stat .accent-bar { position: absolute; left: 0; top: 0; bottom: 0; width: 4px; }
+
+  .grid-2 { display: grid; grid-template-columns: 1.6fr 1fr; gap: 18px; align-items: start; }
+  @media (max-width: 1050px) { .grid-2 { grid-template-columns: 1fr; } }
+
+  .panel {
+    background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .panel .ph { padding: 14px 18px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+  .panel .ph h3 { margin: 0; font-size: 14px; font-weight: 700; }
+  .panel .ph .sub { font-size: 12px; color: var(--text-faint); }
+  .panel .pb { padding: 6px 0; }
+
+  /* Table */
+  .table-tools { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+  .table-tools select, .table-tools input[type=text] {
+    background: var(--panel); border: 1px solid var(--border); color: var(--text);
+    padding: 8px 11px; border-radius: 8px; font-size: 13px;
+  }
+  .table-tools select:focus, .table-tools input:focus { outline: none; border-color: var(--accent); }
+  .chip {
+    font-size: 12px; padding: 5px 11px; border-radius: 20px; border: 1px solid var(--border);
+    background: var(--panel); color: var(--text-dim);
+  }
+  .chip.on { background: var(--accent); border-color: transparent; color: #17110a; font-weight: 700; }
+  .table-wrap { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; background: var(--panel); }
+  table { width: 100%; border-collapse: collapse; }
+  thead th {
+    text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: .6px;
+    color: var(--text-faint); padding: 11px 14px; background: var(--bg-2);
+    border-bottom: 1px solid var(--border); white-space: nowrap; cursor: pointer; user-select: none;
+    position: sticky; top: 0;
+  }
+  thead th:hover { color: var(--text); }
+  thead th .arr { opacity: .5; margin-left: 4px; }
+  tbody td { padding: 12px 14px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  tbody tr { transition: background .1s; }
+  tbody tr:hover { background: var(--panel-2); cursor: pointer; }
+  tbody tr:last-child td { border-bottom: none; }
+  .doc-name { font-weight: 600; }
+  .doc-ref { font-size: 11.5px; color: var(--text-faint); }
+  .party { font-size: 12.5px; }
+  .party .r { color: var(--text-faint); font-size: 11px; }
+
+  .badge { display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; font-weight: 600; padding: 3px 9px; border-radius: 20px; white-space: nowrap; }
+  .badge::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+  .b-active { color: #58d38a; background: rgba(63,174,106,.13); }
+  .b-pending { color: #e0b452; background: rgba(217,164,65,.14); }
+  .b-expired { color: #ea7a7a; background: rgba(217,87,87,.14); }
+  .b-negotiation { color: #6fb0ea; background: rgba(63,127,191,.16); }
+  .b-hbp { color: #b79cf0; background: rgba(150,110,230,.15); }
+  .b-terminated { color: #9aa7b4; background: rgba(120,140,160,.14); }
+
+  .type-tag { font-size: 11.5px; color: var(--text-dim); }
+  .type-tag .dot { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 6px; vertical-align: middle; }
+
+  .rem-flag { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 6px; }
+  .rem-over { color: #fff; background: var(--red); }
+  .rem-soon { color: #17110a; background: var(--amber); }
+  .rem-ok { color: var(--text-dim); background: var(--panel-2); }
+
+  .empty { padding: 50px; text-align: center; color: var(--text-faint); }
+
+  /* Reminder list */
+  .rem-item { display: flex; gap: 12px; padding: 12px 18px; border-bottom: 1px solid var(--border); align-items: flex-start; }
+  .rem-item:last-child { border-bottom: none; }
+  .rem-cal { width: 42px; flex: 0 0 auto; text-align: center; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+  .rem-cal .m { font-size: 9.5px; text-transform: uppercase; background: var(--bg-2); color: var(--text-faint); padding: 2px; letter-spacing: .5px; }
+  .rem-cal .d { font-size: 17px; font-weight: 800; padding: 3px 0; }
+  .rem-body { flex: 1; min-width: 0; }
+  .rem-body .t { font-weight: 600; font-size: 13px; }
+  .rem-body .s { font-size: 12px; color: var(--text-dim); }
+  .rem-body .meta { font-size: 11.5px; color: var(--text-faint); margin-top: 2px; }
+
+  /* Modal */
+  .overlay {
+    position: fixed; inset: 0; background: rgba(6,10,14,.66); backdrop-filter: blur(2px);
+    display: none; align-items: flex-start; justify-content: center; z-index: 100; padding: 40px 16px;
+    overflow: auto;
+  }
+  .overlay.open { display: flex; }
+  .modal {
+    background: var(--bg-2); border: 1px solid var(--border); border-radius: 14px;
+    width: 100%; max-width: 720px; box-shadow: 0 20px 60px rgba(0,0,0,.5); animation: pop .16s ease;
+  }
+  .modal.wide { max-width: 820px; }
+  @keyframes pop { from { transform: translateY(10px) scale(.99); opacity: 0; } to { transform: none; opacity: 1; } }
+  .modal .mh { padding: 18px 22px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 12px; }
+  .modal .mh h2 { margin: 0; font-size: 16px; }
+  .modal .mh .x { margin-left: auto; background: transparent; border: none; color: var(--text-faint); font-size: 22px; line-height: 1; }
+  .modal .mh .x:hover { color: var(--text); }
+  .modal .mb { padding: 20px 22px; }
+  .modal .mf { padding: 16px 22px; border-top: 1px solid var(--border); display: flex; gap: 10px; justify-content: flex-end; }
+
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px 18px; }
+  .form-grid .full { grid-column: 1 / -1; }
+  .field label { display: block; font-size: 11.5px; text-transform: uppercase; letter-spacing: .5px; color: var(--text-faint); margin-bottom: 5px; }
+  .field input, .field select, .field textarea {
+    width: 100%; background: var(--panel); border: 1px solid var(--border); color: var(--text);
+    padding: 9px 11px; border-radius: 8px; font-size: 13.5px; font-family: inherit;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--accent); }
+  .field textarea { resize: vertical; min-height: 62px; }
+  .field .hint { font-size: 11px; color: var(--text-faint); margin-top: 4px; }
+
+  .dropzone {
+    border: 1.5px dashed var(--border); border-radius: 10px; padding: 22px; text-align: center;
+    color: var(--text-faint); background: var(--panel); transition: border-color .15s, background .15s;
+  }
+  .dropzone:hover, .dropzone.drag { border-color: var(--accent); background: var(--panel-2); color: var(--text-dim); }
+  .dropzone .big { font-size: 26px; margin-bottom: 6px; }
+  .file-pill { display: inline-flex; align-items: center; gap: 8px; margin-top: 10px; background: var(--panel-2); border: 1px solid var(--border); padding: 6px 12px; border-radius: 8px; font-size: 12.5px; }
+
+  /* Detail drawer */
+  .kv { display: grid; grid-template-columns: 150px 1fr; gap: 9px 16px; }
+  .kv dt { color: var(--text-faint); font-size: 12px; }
+  .kv dd { margin: 0; font-size: 13.5px; }
+  .detail-section { margin-top: 22px; }
+  .detail-section h4 { font-size: 12px; text-transform: uppercase; letter-spacing: .6px; color: var(--accent-2); margin: 0 0 12px; border-bottom: 1px solid var(--border); padding-bottom: 7px; }
+  .ob-row { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+  .ob-row:last-child { border: none; }
+  .ob-row .d { margin-left: auto; color: var(--text-dim); font-size: 12.5px; }
+
+  .row-actions { display: flex; gap: 6px; }
+  .icon-btn { background: transparent; border: 1px solid var(--border); color: var(--text-dim); width: 30px; height: 30px; border-radius: 7px; display: grid; place-items: center; font-size: 14px; }
+  .icon-btn:hover { background: var(--panel-2); color: var(--text); }
+
+  .toast {
+    position: fixed; bottom: 24px; right: 24px; background: var(--panel-2); border: 1px solid var(--border);
+    border-left: 3px solid var(--green); padding: 13px 18px; border-radius: 9px; box-shadow: var(--shadow);
+    font-size: 13.5px; z-index: 200; opacity: 0; transform: translateY(10px); transition: .2s; pointer-events: none; max-width: 340px;
+  }
+  .toast.show { opacity: 1; transform: none; }
+
+  .pill-legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: 11.5px; color: var(--text-dim); margin-top: 10px; }
+  .pill-legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .pill-legend .dot { width: 9px; height: 9px; border-radius: 2px; }
+
+  .footer-note { text-align: center; color: var(--text-faint); font-size: 11.5px; margin-top: 30px; }
+  .prototype-tag { font-size: 9.5px; background: var(--brand); color: #fff; padding: 2px 6px; border-radius: 4px; letter-spacing: .5px; vertical-align: middle; }
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo">NL</div>
+      <div>
+        <h1>NTEC LandDesk</h1>
+        <div class="sub">Land &amp; Contracts</div>
+      </div>
+    </div>
+    <nav class="nav" id="nav">
+      <div class="label">Workspace</div>
+      <button data-view="dashboard" class="active"><span class="ic">▤</span> Dashboard</button>
+      <button data-view="records"><span class="ic">▦</span> Land Records <span class="count" id="nav-records">0</span></button>
+      <button data-view="reminders"><span class="ic">⏰</span> Reminders / Tickler <span class="count alertcount" id="nav-rem">0</span></button>
+      <button data-view="documents"><span class="ic">📄</span> Documents <span class="count" id="nav-docs">0</span></button>
+      <div class="label">Actions</div>
+      <button id="btn-intake-side"><span class="ic">＋</span> New Intake</button>
+    </nav>
+    <div class="sidebar-foot">
+      NTEC LandDesk <span class="prototype-tag">PROTOTYPE</span><br>
+      Navajo Transitional Energy Co.
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <div class="main">
+    <div class="topbar">
+      <div class="page-title" id="page-title">Dashboard <span class="muted" id="page-sub"></span></div>
+      <div class="search-wrap">
+        <span class="si">🔍</span>
+        <input id="global-search" type="text" placeholder="Search records, parties, tracts, references…" />
+      </div>
+      <button class="btn primary" id="btn-intake"><span>＋</span> New Intake</button>
+    </div>
+    <div class="content" id="content"></div>
+  </div>
+</div>
+
+<!-- Intake / Edit Modal -->
+<div class="overlay" id="intake-overlay">
+  <div class="modal wide">
+    <div class="mh">
+      <h2 id="intake-title">Document Intake</h2>
+      <button class="x" data-close>&times;</button>
+    </div>
+    <div class="mb">
+      <form id="intake-form">
+        <input type="hidden" id="f-id" />
+        <div class="form-grid">
+          <div class="field full">
+            <label>Document / Instrument Name</label>
+            <input id="f-name" required placeholder="e.g. Coal Mining Lease – Tract 14-North" />
+          </div>
+          <div class="field">
+            <label>Record Type</label>
+            <select id="f-type" required></select>
+          </div>
+          <div class="field">
+            <label>Status</label>
+            <select id="f-status" required></select>
+          </div>
+          <div class="field">
+            <label>Lessor / Grantor</label>
+            <input id="f-lessor" placeholder="Party conveying rights" />
+          </div>
+          <div class="field">
+            <label>Lessee / Grantee</label>
+            <input id="f-lessee" placeholder="Party receiving rights" />
+          </div>
+          <div class="field">
+            <label>County</label>
+            <input id="f-county" placeholder="e.g. Navajo" />
+          </div>
+          <div class="field">
+            <label>State</label>
+            <select id="f-state"></select>
+          </div>
+          <div class="field full">
+            <label>Legal Description (Township / Range / Section)</label>
+            <input id="f-legal" placeholder="e.g. T22N R18W Sec 14, S½NE¼" />
+          </div>
+          <div class="field">
+            <label>Gross Acreage</label>
+            <input id="f-acres" type="number" step="0.01" min="0" placeholder="0.00" />
+          </div>
+          <div class="field">
+            <label>Recording / Instrument No.</label>
+            <input id="f-ref" placeholder="e.g. BK 482 PG 119" />
+          </div>
+          <div class="field">
+            <label>Effective Date</label>
+            <input id="f-eff" type="date" />
+          </div>
+          <div class="field">
+            <label>Expiration / Term End</label>
+            <input id="f-exp" type="date" />
+          </div>
+          <div class="field">
+            <label>Annual Rental ($)</label>
+            <input id="f-rental" type="number" step="0.01" min="0" placeholder="0.00" />
+          </div>
+          <div class="field">
+            <label>Royalty Rate (%)</label>
+            <input id="f-royalty" type="number" step="0.001" min="0" placeholder="e.g. 12.5" />
+          </div>
+          <div class="field full">
+            <label>Next Obligation / Reminder</label>
+            <div class="form-grid" style="gap:12px;">
+              <select id="f-obtype"></select>
+              <input id="f-obdate" type="date" />
+            </div>
+            <div class="hint">Sets a tickler reminder (rental due, renewal deadline, compliance filing, option, etc.).</div>
+          </div>
+          <div class="field full">
+            <label>Notes</label>
+            <textarea id="f-notes" placeholder="Encumbrances, special provisions, contacts…"></textarea>
+          </div>
+          <div class="field full">
+            <label>Attach Document</label>
+            <div class="dropzone" id="dropzone">
+              <div class="big">📎</div>
+              <div>Drop a scanned lease/contract here, or <strong>click to browse</strong></div>
+              <div class="hint" style="margin-top:4px;">PDF, TIFF, DOCX — filename is stored on the record (demo does not upload files)</div>
+              <input type="file" id="f-file" style="display:none;" />
+            </div>
+            <div id="file-preview"></div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="mf">
+      <button class="btn ghost" data-close>Cancel</button>
+      <button class="btn primary" id="intake-save">Save Record</button>
+    </div>
+  </div>
+</div>
+
+<!-- Detail Drawer Modal -->
+<div class="overlay" id="detail-overlay">
+  <div class="modal">
+    <div class="mh">
+      <h2 id="detail-title">Record</h2>
+      <button class="x" data-close>&times;</button>
+    </div>
+    <div class="mb" id="detail-body"></div>
+    <div class="mf">
+      <button class="btn ghost" id="detail-delete" style="margin-right:auto; color:var(--red); border-color:rgba(217,87,87,.4);">Delete</button>
+      <button class="btn" data-close>Close</button>
+      <button class="btn primary" id="detail-edit">Edit Record</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================
+   NTEC LandDesk — prototype land management & contract system
+   Self-contained: data persists in localStorage.
+   ============================================================ */
+
+const RECORD_TYPES = [
+  { v: "Coal Lease",          c: "#5b6b7a" },
+  { v: "Oil & Gas Lease",     c: "#3fae6a" },
+  { v: "Mineral Lease",       c: "#c8862b" },
+  { v: "Surface Lease",       c: "#b5793a" },
+  { v: "Right-of-Way (ROW)",  c: "#3f7fbf" },
+  { v: "Easement",            c: "#6a8fd4" },
+  { v: "Grazing Permit",      c: "#8aa62b" },
+  { v: "Royalty Agreement",   c: "#d99a3f" },
+  { v: "Water Agreement",     c: "#2bb0b0" },
+  { v: "Access / Land Use",   c: "#9a72d0" },
+];
+const STATUSES = ["Active", "Pending", "In Negotiation", "Held by Production", "Expired", "Terminated"];
+const STATUS_CLASS = {
+  "Active": "b-active", "Pending": "b-pending", "In Negotiation": "b-negotiation",
+  "Held by Production": "b-hbp", "Expired": "b-expired", "Terminated": "b-terminated"
+};
+const OB_TYPES = ["— none —", "Rental Payment Due", "Lease Renewal", "Option Deadline", "Royalty Report Due",
+  "Compliance Filing", "Reclamation Milestone", "Right-of-Way Renewal", "Insurance Certificate", "BIA/BLM Approval"];
+const STATES = ["AZ", "NM", "MT", "CO", "UT", "WY", "ND", "TX", "OK"];
+
+const typeColor = (t) => (RECORD_TYPES.find(r => r.v === t) || {}).c || "#888";
+
+/* ---------- storage ---------- */
+const KEY = "ntec_landdesk_v1";
+let DB = load();
+
+function load() {
+  try {
+    const raw = localStorage.getItem(KEY);
+    if (raw) return JSON.parse(raw);
+  } catch (e) {}
+  const seeded = seed();
+  localStorage.setItem(KEY, JSON.stringify(seeded));
+  return seeded;
+}
+function save() { localStorage.setItem(KEY, JSON.stringify(DB)); }
+
+/* ---------- date helpers (fixed "today" for a stable demo) ---------- */
+const TODAY = new Date("2026-08-03T00:00:00");
+function daysUntil(dstr) {
+  if (!dstr) return null;
+  const d = new Date(dstr + "T00:00:00");
+  return Math.round((d - TODAY) / 86400000);
+}
+function fmtDate(dstr) {
+  if (!dstr) return "—";
+  const d = new Date(dstr + "T00:00:00");
+  return d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
+}
+function addDays(base, n) {
+  const d = new Date(base); d.setDate(d.getDate() + n);
+  return d.toISOString().slice(0, 10);
+}
+const T = TODAY.toISOString().slice(0, 10);
+
+/* ---------- seed data ---------- */
+function seed() {
+  let id = 1000;
+  const mk = (o) => Object.assign({ id: "REC-" + (id++), file: null, createdAt: T }, o);
+  const records = [
+    mk({ name: "Navajo Mine – Area IV North Coal Lease", type: "Coal Lease", status: "Held by Production",
+      lessor: "Navajo Nation", lessee: "NTEC Operations LLC", county: "San Juan", state: "NM",
+      legal: "T29N R16W Sec 4–9, 16–21", acres: 12480, ref: "BIA-14-20-0300-1234", eff: "2013-12-30", exp: "2032-12-31",
+      rental: 0, royalty: 12.5, obType: "Royalty Report Due", obDate: addDays(TODAY, 6),
+      notes: "Coal supply for Four Corners Power Plant. Held by production; royalty reporting monthly to OSMRE." }),
+    mk({ name: "Four Corners Rail Spur – Right of Way", type: "Right-of-Way (ROW)", status: "Active",
+      lessor: "Allottee Group 22-A", lessee: "NTEC Operations LLC", county: "San Juan", state: "NM",
+      legal: "T30N R16W Sec 12, N½", acres: 88.4, ref: "BK 512 PG 044", eff: "2019-05-01", exp: "2026-09-15",
+      rental: 42000, royalty: 0, obType: "Right-of-Way Renewal", obDate: addDays(TODAY, 43),
+      notes: "20-ft rail access ROW across allotted trust land. BIA renewal packet in progress." }),
+    mk({ name: "Bisti Solar Option – Surface Lease", type: "Surface Lease", status: "In Negotiation",
+      lessor: "Private – R. Yazzie Family Trust", lessee: "NTEC Clean Energy", county: "San Juan", state: "NM",
+      legal: "T24N R11W Sec 30, SW¼", acres: 640, ref: "PENDING", eff: "", exp: "",
+      rental: 96000, royalty: 0, obType: "Option Deadline", obDate: addDays(TODAY, -3),
+      notes: "Option to lease 640 ac for utility-scale solar. Option exercise deadline PASSED — escalate to Land Manager." }),
+    mk({ name: "Bull Canyon Grazing Permit", type: "Grazing Permit", status: "Active",
+      lessor: "Bureau of Land Management", lessee: "NTEC Operations LLC", county: "Big Horn", state: "MT",
+      legal: "T2S R38E Sec 22–27", acres: 3200, ref: "BLM-MTM-118842", eff: "2021-03-01", exp: "2031-02-28",
+      rental: 5760, royalty: 0, obType: "Rental Payment Due", obDate: addDays(TODAY, 21),
+      notes: "AUM grazing on federal land adjacent to Spring Creek Mine buffer." }),
+    mk({ name: "Spring Creek Mine – Federal Coal Lease MTM-94378", type: "Coal Lease", status: "Active",
+      lessor: "Bureau of Land Management", lessee: "Spring Creek Coal (NTEC)", county: "Big Horn", state: "MT",
+      legal: "T9S R40E Sec 1–4, 9–12", acres: 8960, ref: "MTM-94378", eff: "2012-06-01", exp: "2032-05-31",
+      rental: 89600, royalty: 12.5, obType: "Rental Payment Due", obDate: addDays(TODAY, 11),
+      notes: "Advance royalty / rental due annually to BLM. Diligent development compliance required." }),
+    mk({ name: "Antelope Water Pipeline Easement", type: "Easement", status: "Active",
+      lessor: "Rosebud County", lessee: "Spring Creek Coal (NTEC)", county: "Rosebud", state: "MT",
+      legal: "T4S R41E Sec 18", acres: 14.2, ref: "BK 88 PG 302", eff: "2018-08-15", exp: "2038-08-14",
+      rental: 3000, royalty: 0, obType: "Insurance Certificate", obDate: addDays(TODAY, 2),
+      notes: "Perpetual-style 20-yr easement for water conveyance. COI renewal required annually." }),
+    mk({ name: "Section 16 Oil & Gas Lease – Yazzie", type: "Oil & Gas Lease", status: "Active",
+      lessor: "Allottee – Ella Yazzie", lessee: "NTEC Operations LLC", county: "San Juan", state: "NM",
+      legal: "T27N R13W Sec 16, all", acres: 640, ref: "BIA-OG-55120", eff: "2022-11-01", exp: "2027-10-31",
+      rental: 12800, royalty: 18.75, obType: "Rental Payment Due", obDate: addDays(TODAY, 88),
+      notes: "5-yr primary term, 18.75% royalty. HBP if production established." }),
+    mk({ name: "Mesa Verde Transmission Corridor ROW", type: "Right-of-Way (ROW)", status: "Pending",
+      lessor: "Ute Mountain Ute Tribe", lessee: "NTEC Clean Energy", county: "Montezuma", state: "CO",
+      legal: "T34N R18W Sec 6, 7", acres: 210, ref: "PENDING", eff: "", exp: "",
+      rental: 63000, royalty: 0, obType: "BIA/BLM Approval", obDate: addDays(TODAY, 30),
+      notes: "230kV transmission ROW for solar interconnect. Awaiting tribal council + BIA approval." }),
+    mk({ name: "Reclamation Bond Parcel – Area III", type: "Access / Land Use", status: "Active",
+      lessor: "Navajo Nation", lessee: "NTEC Operations LLC", county: "San Juan", state: "NM",
+      legal: "T29N R16W Sec 28", acres: 320, ref: "REC-BOND-0091", eff: "2015-01-01", exp: "2029-12-31",
+      rental: 0, royalty: 0, obType: "Reclamation Milestone", obDate: addDays(TODAY, -12),
+      notes: "Post-mining reclamation obligation. Phase 2 revegetation milestone OVERDUE — coordinate w/ Environmental." }),
+    mk({ name: "Hopi Boundary Access Agreement", type: "Access / Land Use", status: "Active",
+      lessor: "Hopi Tribe", lessee: "NTEC Operations LLC", county: "Navajo", state: "AZ",
+      legal: "T28N R17E Sec 3", acres: 45, ref: "BK 201 PG 77", eff: "2020-07-01", exp: "2025-06-30",
+      rental: 8000, royalty: 0, obType: "Lease Renewal", obDate: addDays(TODAY, -35),
+      notes: "Access agreement EXPIRED — holdover. Renewal negotiation needed." }),
+    mk({ name: "Powder River Federal Coal Tract", type: "Coal Lease", status: "In Negotiation",
+      lessor: "Bureau of Land Management", lessee: "NTEC Operations LLC", county: "Campbell", state: "WY",
+      legal: "T48N R71W Sec 14, 15, 22, 23", acres: 5120, ref: "WYW-190022", eff: "", exp: "",
+      rental: 51200, royalty: 12.5, obType: "Option Deadline", obDate: addDays(TODAY, 120),
+      notes: "Competitive lease sale tract under evaluation. LBA process." }),
+    mk({ name: "San Juan Royalty Distribution Agreement", type: "Royalty Agreement", status: "Active",
+      lessor: "Navajo Nation Minerals Dept.", lessee: "NTEC Operations LLC", county: "San Juan", state: "NM",
+      legal: "Multiple – see schedule A", acres: 0, ref: "ROY-2013-07", eff: "2013-12-30", exp: "2032-12-31",
+      rental: 0, royalty: 12.5, obType: "Royalty Report Due", obDate: addDays(TODAY, 6),
+      notes: "Governs royalty allocation across coal tracts. Quarterly reconciliation." }),
+  ];
+  return { records };
+}
+
+/* ---------- reminder computation ---------- */
+function reminderState(rec) {
+  if (!rec.obType || rec.obType === "— none —" || !rec.obDate) return null;
+  const d = daysUntil(rec.obDate);
+  let level = "ok";
+  if (d < 0) level = "over";
+  else if (d <= 30) level = "soon";
+  return { type: rec.obType, date: rec.obDate, days: d, level };
+}
+
+/* ---------- app state ---------- */
+let VIEW = "dashboard";
+let SORT = { key: "obDate", dir: 1 };
+let FILTER = { type: "", status: "", q: "" };
+let ONLY_REMINDERS = false;
+
+/* ---------- rendering ---------- */
+const $ = (s) => document.querySelector(s);
+const content = $("#content");
+
+function setView(v) {
+  VIEW = v;
+  document.querySelectorAll("#nav button[data-view]").forEach(b =>
+    b.classList.toggle("active", b.dataset.view === v));
+  render();
+}
+
+function updateNavCounts() {
+  $("#nav-records").textContent = DB.records.length;
+  $("#nav-docs").textContent = DB.records.filter(r => r.file).length;
+  const alerts = DB.records.map(reminderState).filter(r => r && r.level !== "ok").length;
+  $("#nav-rem").textContent = alerts;
+}
+
+function render() {
+  updateNavCounts();
+  const titles = {
+    dashboard: ["Dashboard", "Portfolio overview & upcoming obligations"],
+    records: ["Land Records", "Leases, ROWs, easements & agreements"],
+    reminders: ["Reminders / Tickler", "Obligation calendar & deadlines"],
+    documents: ["Documents", "Intake & instrument repository"],
+  };
+  $("#page-title").firstChild.textContent = titles[VIEW][0] + " ";
+  $("#page-sub").textContent = titles[VIEW][1];
+
+  if (VIEW === "dashboard") renderDashboard();
+  else if (VIEW === "records") renderRecords();
+  else if (VIEW === "reminders") renderReminders();
+  else if (VIEW === "documents") renderDocuments();
+}
+
+/* ---------- dashboard ---------- */
+function renderDashboard() {
+  const recs = DB.records;
+  const active = recs.filter(r => r.status === "Active" || r.status === "Held by Production").length;
+  const acres = recs.reduce((s, r) => s + (Number(r.acres) || 0), 0);
+  const rems = recs.map(r => ({ r, s: reminderState(r) })).filter(x => x.s);
+  const overdue = rems.filter(x => x.s.level === "over").length;
+  const soon = rems.filter(x => x.s.level === "soon").length;
+  const annualRent = recs.reduce((s, r) => s + (Number(r.rental) || 0), 0);
+
+  const upcoming = rems.filter(x => x.s.level !== "ok")
+    .sort((a, b) => a.s.days - b.s.days).slice(0, 8);
+
+  // type distribution
+  const byType = {};
+  recs.forEach(r => byType[r.type] = (byType[r.type] || 0) + 1);
+  const typeRows = Object.entries(byType).sort((a, b) => b[1] - a[1]);
+  const maxType = Math.max(...typeRows.map(t => t[1]), 1);
+
+  content.innerHTML = `
+    <div class="stat-grid">
+      <div class="stat"><div class="accent-bar" style="background:var(--accent)"></div>
+        <div class="k">Total Records</div><div class="v">${recs.length}</div><div class="d">${active} active / HBP</div></div>
+      <div class="stat"><div class="accent-bar" style="background:var(--sky)"></div>
+        <div class="k">Acreage Under Management</div><div class="v">${acres.toLocaleString()}</div><div class="d">gross acres</div></div>
+      <div class="stat"><div class="accent-bar" style="background:var(--red)"></div>
+        <div class="k">Overdue Obligations</div><div class="v" style="color:${overdue ? 'var(--red)' : 'inherit'}">${overdue}</div><div class="d">require action</div></div>
+      <div class="stat"><div class="accent-bar" style="background:var(--amber)"></div>
+        <div class="k">Due ≤ 30 days</div><div class="v" style="color:${soon ? 'var(--amber)' : 'inherit'}">${soon}</div><div class="d">upcoming deadlines</div></div>
+      <div class="stat"><div class="accent-bar" style="background:var(--green)"></div>
+        <div class="k">Annual Rentals</div><div class="v">$${(annualRent / 1000).toFixed(0)}k</div><div class="d">recurring obligations</div></div>
+    </div>
+
+    <div class="grid-2">
+      <div class="panel">
+        <div class="ph"><h3>Upcoming &amp; Overdue Obligations</h3><span class="sub" style="margin-left:auto;">next deadlines</span></div>
+        <div class="pb">
+          ${upcoming.length ? upcoming.map(x => reminderItem(x.r, x.s)).join("") :
+            `<div class="empty">No upcoming obligations 🎉</div>`}
+        </div>
+      </div>
+      <div class="panel">
+        <div class="ph"><h3>Portfolio by Record Type</h3></div>
+        <div class="pb" style="padding:14px 18px;">
+          ${typeRows.map(([t, n]) => `
+            <div style="margin-bottom:11px;">
+              <div style="display:flex; justify-content:space-between; font-size:12.5px; margin-bottom:4px;">
+                <span><span class="dot" style="display:inline-block;width:9px;height:9px;border-radius:2px;background:${typeColor(t)};margin-right:7px;"></span>${t}</span>
+                <span style="color:var(--text-faint)">${n}</span>
+              </div>
+              <div style="height:7px;background:var(--bg-2);border-radius:4px;overflow:hidden;">
+                <div style="height:100%;width:${(n / maxType * 100)}%;background:${typeColor(t)};border-radius:4px;"></div>
+              </div>
+            </div>`).join("")}
+        </div>
+      </div>
+    </div>
+    <div class="footer-note">NTEC LandDesk prototype · fixed demo date ${fmtDate(T)} · data stored locally in your browser</div>
+  `;
+}
+
+function reminderItem(rec, s) {
+  const mo = new Date(s.date + "T00:00:00").toLocaleDateString("en-US", { month: "short" });
+  const day = new Date(s.date + "T00:00:00").getDate();
+  const rel = s.days < 0 ? `${Math.abs(s.days)}d overdue` : s.days === 0 ? "due today" : `in ${s.days}d`;
+  const col = s.level === "over" ? "var(--red)" : s.level === "soon" ? "var(--amber)" : "var(--text-dim)";
+  return `
+    <div class="rem-item" onclick="openDetail('${rec.id}')" style="cursor:pointer;">
+      <div class="rem-cal"><div class="m">${mo}</div><div class="d" style="color:${col}">${day}</div></div>
+      <div class="rem-body">
+        <div class="t">${esc(s.type)}</div>
+        <div class="s">${esc(rec.name)}</div>
+        <div class="meta">${esc(rec.lessee || "—")} · ${esc(rec.county || "")} ${esc(rec.state || "")}</div>
+      </div>
+      <div style="text-align:right;">
+        <div class="rem-flag ${s.level === 'over' ? 'rem-over' : s.level === 'soon' ? 'rem-soon' : 'rem-ok'}">${rel}</div>
+        <div style="font-size:11px;color:var(--text-faint);margin-top:5px;">${fmtDate(s.date)}</div>
+      </div>
+    </div>`;
+}
+
+/* ---------- records table ---------- */
+function getFiltered() {
+  let rows = DB.records.slice();
+  const q = FILTER.q.trim().toLowerCase();
+  if (q) {
+    rows = rows.filter(r =>
+      [r.name, r.type, r.status, r.lessor, r.lessee, r.county, r.state, r.legal, r.ref, r.notes, r.obType]
+        .filter(Boolean).some(v => String(v).toLowerCase().includes(q)));
+  }
+  if (FILTER.type) rows = rows.filter(r => r.type === FILTER.type);
+  if (FILTER.status) rows = rows.filter(r => r.status === FILTER.status);
+  if (ONLY_REMINDERS) rows = rows.filter(r => { const s = reminderState(r); return s && s.level !== "ok"; });
+
+  const k = SORT.key, dir = SORT.dir;
+  rows.sort((a, b) => {
+    let va, vb;
+    if (k === "obDate") { va = daysUntil(a.obDate); vb = daysUntil(b.obDate);
+      va = (va === null ? 1e9 : va); vb = (vb === null ? 1e9 : vb); }
+    else if (k === "acres" || k === "rental" || k === "royalty") { va = Number(a[k]) || 0; vb = Number(b[k]) || 0; }
+    else if (k === "exp" || k === "eff") { va = a[k] || "9999"; vb = b[k] || "9999"; }
+    else { va = String(a[k] || "").toLowerCase(); vb = String(b[k] || "").toLowerCase(); }
+    if (va < vb) return -1 * dir; if (va > vb) return 1 * dir; return 0;
+  });
+  return rows;
+}
+
+function renderRecords() {
+  const rows = getFiltered();
+  const th = (key, label, align) => `<th data-sort="${key}" style="${align ? 'text-align:' + align : ''}">${label}${SORT.key === key ? `<span class="arr">${SORT.dir > 0 ? '▲' : '▼'}</span>` : ''}</th>`;
+
+  content.innerHTML = `
+    <div class="table-tools">
+      <select id="ft-type"><option value="">All Types</option>${RECORD_TYPES.map(t => `<option ${FILTER.type === t.v ? 'selected' : ''}>${t.v}</option>`).join("")}</select>
+      <select id="ft-status"><option value="">All Statuses</option>${STATUSES.map(s => `<option ${FILTER.status === s ? 'selected' : ''}>${s}</option>`).join("")}</select>
+      <button class="chip ${ONLY_REMINDERS ? 'on' : ''}" id="ft-rem">⏰ With active reminder</button>
+      <span style="margin-left:auto;color:var(--text-faint);font-size:12.5px;">${rows.length} of ${DB.records.length} records</span>
+      <button class="btn sm" id="ft-clear">Clear</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          ${th("name", "Record / Instrument")}
+          ${th("type", "Type")}
+          ${th("status", "Status")}
+          ${th("lessee", "Parties")}
+          ${th("county", "Location")}
+          ${th("acres", "Acres", "right")}
+          ${th("exp", "Term End")}
+          ${th("obDate", "Next Obligation")}
+        </tr></thead>
+        <tbody>
+          ${rows.length ? rows.map(recordRow).join("") : `<tr><td colspan="8"><div class="empty">No records match your filters.</div></td></tr>`}
+        </tbody>
+      </table>
+    </div>
+    <div class="pill-legend">
+      ${RECORD_TYPES.map(t => `<span><span class="dot" style="background:${t.c}"></span>${t.v}</span>`).join("")}
+    </div>
+  `;
+
+  $("#ft-type").onchange = (e) => { FILTER.type = e.target.value; render(); };
+  $("#ft-status").onchange = (e) => { FILTER.status = e.target.value; render(); };
+  $("#ft-rem").onclick = () => { ONLY_REMINDERS = !ONLY_REMINDERS; render(); };
+  $("#ft-clear").onclick = () => { FILTER = { type: "", status: "", q: FILTER.q }; ONLY_REMINDERS = false; render(); };
+  document.querySelectorAll("thead th[data-sort]").forEach(th => {
+    th.onclick = () => {
+      const k = th.dataset.sort;
+      if (SORT.key === k) SORT.dir *= -1; else { SORT.key = k; SORT.dir = 1; }
+      render();
+    };
+  });
+}
+
+function recordRow(r) {
+  const s = reminderState(r);
+  let ob = `<span class="rem-flag rem-ok">none</span>`;
+  if (s) {
+    const rel = s.days < 0 ? `${Math.abs(s.days)}d overdue` : s.days === 0 ? "today" : `${s.days}d`;
+    const cls = s.level === "over" ? "rem-over" : s.level === "soon" ? "rem-soon" : "rem-ok";
+    ob = `<span class="rem-flag ${cls}">${rel}</span> <span class="doc-ref">${esc(s.type)}</span>`;
+  }
+  return `
+    <tr onclick="openDetail('${r.id}')">
+      <td><div class="doc-name">${esc(r.name)}</div><div class="doc-ref">${esc(r.ref || "—")}</div></td>
+      <td><span class="type-tag"><span class="dot" style="background:${typeColor(r.type)}"></span>${esc(r.type)}</span></td>
+      <td><span class="badge ${STATUS_CLASS[r.status] || ''}">${esc(r.status)}</span></td>
+      <td><div class="party">${esc(r.lessee || "—")}</div><div class="party r">from ${esc(r.lessor || "—")}</div></td>
+      <td><div class="party">${esc(r.county || "—")}, ${esc(r.state || "")}</div><div class="party r">${esc(r.legal || "")}</div></td>
+      <td style="text-align:right;">${r.acres ? Number(r.acres).toLocaleString() : "—"}</td>
+      <td>${fmtDate(r.exp)}</td>
+      <td>${ob}</td>
+    </tr>`;
+}
+
+/* ---------- reminders view ---------- */
+function renderReminders() {
+  const rems = DB.records.map(r => ({ r, s: reminderState(r) })).filter(x => x.s)
+    .sort((a, b) => a.s.days - b.s.days);
+  const over = rems.filter(x => x.s.level === "over");
+  const soon = rems.filter(x => x.s.level === "soon");
+  const later = rems.filter(x => x.s.level === "ok");
+
+  const section = (title, list, color) => `
+    <div class="panel" style="margin-bottom:18px;">
+      <div class="ph"><h3>${title}</h3><span class="count" style="margin-left:auto;background:${color};color:#17110a;font-weight:700;padding:1px 9px;border-radius:10px;font-size:12px;">${list.length}</span></div>
+      <div class="pb">${list.length ? list.map(x => reminderItem(x.r, x.s)).join("") : `<div class="empty" style="padding:26px;">Nothing here.</div>`}</div>
+    </div>`;
+
+  content.innerHTML = `
+    <div class="stat-grid" style="grid-template-columns:repeat(3,1fr);">
+      <div class="stat"><div class="accent-bar" style="background:var(--red)"></div><div class="k">Overdue</div><div class="v" style="color:var(--red)">${over.length}</div><div class="d">past due date</div></div>
+      <div class="stat"><div class="accent-bar" style="background:var(--amber)"></div><div class="k">Due ≤ 30 days</div><div class="v" style="color:var(--amber)">${soon.length}</div><div class="d">action soon</div></div>
+      <div class="stat"><div class="accent-bar" style="background:var(--sky)"></div><div class="k">Scheduled later</div><div class="v">${later.length}</div><div class="d">future obligations</div></div>
+    </div>
+    ${section("🔴 Overdue", over, "var(--red)")}
+    ${section("🟡 Due within 30 days", soon, "var(--amber)")}
+    ${section("🔵 Upcoming", later, "var(--sky)")}
+  `;
+}
+
+/* ---------- documents view ---------- */
+function renderDocuments() {
+  const recs = DB.records.slice().sort((a, b) => (b.createdAt || "").localeCompare(a.createdAt || ""));
+  content.innerHTML = `
+    <div class="table-tools">
+      <span style="color:var(--text-faint);font-size:12.5px;">Document repository — ${recs.filter(r => r.file).length} attached files across ${recs.length} records</span>
+      <button class="btn sm primary" id="doc-intake" style="margin-left:auto;">＋ Intake Document</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Instrument</th><th>Type</th><th>Recording No.</th><th>Attached File</th><th>Effective</th><th>Logged</th></tr></thead>
+        <tbody>
+          ${recs.map(r => `
+            <tr onclick="openDetail('${r.id}')">
+              <td><div class="doc-name">${esc(r.name)}</div><div class="doc-ref">${esc(r.lessee || "")}</div></td>
+              <td><span class="type-tag"><span class="dot" style="background:${typeColor(r.type)}"></span>${esc(r.type)}</span></td>
+              <td>${esc(r.ref || "—")}</td>
+              <td>${r.file ? `<span class="file-pill" style="margin:0;">📄 ${esc(r.file)}</span>` : `<span class="doc-ref">no file attached</span>`}</td>
+              <td>${fmtDate(r.eff)}</td>
+              <td>${fmtDate(r.createdAt)}</td>
+            </tr>`).join("")}
+        </tbody>
+      </table>
+    </div>`;
+  $("#doc-intake").onclick = () => openIntake();
+}
+
+/* ---------- detail drawer ---------- */
+let currentDetailId = null;
+function openDetail(id) {
+  const r = DB.records.find(x => x.id === id);
+  if (!r) return;
+  currentDetailId = id;
+  const s = reminderState(r);
+  $("#detail-title").innerHTML = `${esc(r.name)}`;
+  const expDays = daysUntil(r.exp);
+  const expNote = expDays !== null ? (expDays < 0 ? `<span style="color:var(--red)">expired ${Math.abs(expDays)}d ago</span>` : `${expDays}d remaining`) : "";
+  $("#detail-body").innerHTML = `
+    <div style="display:flex;gap:10px;align-items:center;margin-bottom:16px;flex-wrap:wrap;">
+      <span class="badge ${STATUS_CLASS[r.status] || ''}">${esc(r.status)}</span>
+      <span class="type-tag"><span class="dot" style="background:${typeColor(r.type)}"></span>${esc(r.type)}</span>
+      <span class="doc-ref" style="margin-left:auto;">${esc(r.id)}</span>
+    </div>
+    <dl class="kv">
+      <dt>Lessor / Grantor</dt><dd>${esc(r.lessor || "—")}</dd>
+      <dt>Lessee / Grantee</dt><dd>${esc(r.lessee || "—")}</dd>
+      <dt>Location</dt><dd>${esc(r.county || "—")}, ${esc(r.state || "")}</dd>
+      <dt>Legal Description</dt><dd>${esc(r.legal || "—")}</dd>
+      <dt>Gross Acreage</dt><dd>${r.acres ? Number(r.acres).toLocaleString() + " ac" : "—"}</dd>
+      <dt>Recording No.</dt><dd>${esc(r.ref || "—")}</dd>
+      <dt>Effective Date</dt><dd>${fmtDate(r.eff)}</dd>
+      <dt>Term End</dt><dd>${fmtDate(r.exp)} ${expNote ? `· ${expNote}` : ""}</dd>
+      <dt>Annual Rental</dt><dd>${r.rental ? "$" + Number(r.rental).toLocaleString() : "—"}</dd>
+      <dt>Royalty Rate</dt><dd>${r.royalty ? r.royalty + "%" : "—"}</dd>
+    </dl>
+
+    <div class="detail-section">
+      <h4>Obligations &amp; Reminders</h4>
+      ${s ? `
+        <div class="ob-row">
+          <span class="rem-flag ${s.level === 'over' ? 'rem-over' : s.level === 'soon' ? 'rem-soon' : 'rem-ok'}">${s.days < 0 ? Math.abs(s.days) + 'd overdue' : s.days === 0 ? 'due today' : 'in ' + s.days + 'd'}</span>
+          <span>${esc(s.type)}</span>
+          <span class="d">${fmtDate(s.date)}</span>
+        </div>` : `<div class="doc-ref" style="padding:6px 0;">No active reminder set.</div>`}
+    </div>
+
+    ${r.notes ? `<div class="detail-section"><h4>Notes</h4><div style="font-size:13.5px;color:var(--text-dim);">${esc(r.notes)}</div></div>` : ""}
+
+    <div class="detail-section">
+      <h4>Attached Document</h4>
+      ${r.file ? `<span class="file-pill">📄 ${esc(r.file)}</span>` : `<div class="doc-ref">No file attached to this record.</div>`}
+    </div>
+  `;
+  $("#detail-overlay").classList.add("open");
+}
+
+$("#detail-edit").onclick = () => { const id = currentDetailId; closeAll(); openIntake(id); };
+$("#detail-delete").onclick = () => {
+  if (!currentDetailId) return;
+  if (confirm("Delete this record? This cannot be undone.")) {
+    DB.records = DB.records.filter(r => r.id !== currentDetailId);
+    save(); closeAll(); render(); toast("Record deleted");
+  }
+};
+
+/* ---------- intake form ---------- */
+let pendingFile = null;
+function fillSelect(el, arr, sel) {
+  el.innerHTML = arr.map(v => {
+    const val = typeof v === "string" ? v : v.v;
+    return `<option value="${val}" ${val === sel ? "selected" : ""}>${val}</option>`;
+  }).join("");
+}
+
+function openIntake(id) {
+  const editing = !!id;
+  const r = editing ? DB.records.find(x => x.id === id) : null;
+  $("#intake-title").textContent = editing ? "Edit Record" : "Document Intake";
+  fillSelect($("#f-type"), RECORD_TYPES, r ? r.type : "Coal Lease");
+  fillSelect($("#f-status"), STATUSES, r ? r.status : "Pending");
+  fillSelect($("#f-state"), STATES, r ? r.state : "NM");
+  fillSelect($("#f-obtype"), OB_TYPES, r ? r.obType : "— none —");
+  $("#f-id").value = r ? r.id : "";
+  $("#f-name").value = r ? r.name : "";
+  $("#f-lessor").value = r ? r.lessor : "";
+  $("#f-lessee").value = r ? r.lessee : "";
+  $("#f-county").value = r ? r.county : "";
+  $("#f-legal").value = r ? r.legal : "";
+  $("#f-acres").value = r ? r.acres : "";
+  $("#f-ref").value = r ? r.ref : "";
+  $("#f-eff").value = r ? r.eff : "";
+  $("#f-exp").value = r ? r.exp : "";
+  $("#f-rental").value = r ? r.rental : "";
+  $("#f-royalty").value = r ? r.royalty : "";
+  $("#f-obdate").value = r ? r.obDate : "";
+  $("#f-notes").value = r ? r.notes : "";
+  pendingFile = r ? r.file : null;
+  renderFilePreview();
+  $("#intake-overlay").classList.add("open");
+  setTimeout(() => $("#f-name").focus(), 50);
+}
+
+function renderFilePreview() {
+  $("#file-preview").innerHTML = pendingFile
+    ? `<span class="file-pill">📄 ${esc(pendingFile)} <button type="button" onclick="clearFile()" style="background:none;border:none;color:var(--text-faint);cursor:pointer;">✕</button></span>`
+    : "";
+}
+function clearFile() { pendingFile = null; renderFilePreview(); }
+
+$("#intake-save").onclick = () => {
+  const name = $("#f-name").value.trim();
+  if (!name) { $("#f-name").focus(); toast("Document name is required", true); return; }
+  const id = $("#f-id").value;
+  const obType = $("#f-obtype").value;
+  const rec = {
+    name,
+    type: $("#f-type").value,
+    status: $("#f-status").value,
+    lessor: $("#f-lessor").value.trim(),
+    lessee: $("#f-lessee").value.trim(),
+    county: $("#f-county").value.trim(),
+    state: $("#f-state").value,
+    legal: $("#f-legal").value.trim(),
+    acres: $("#f-acres").value,
+    ref: $("#f-ref").value.trim(),
+    eff: $("#f-eff").value,
+    exp: $("#f-exp").value,
+    rental: $("#f-rental").value,
+    royalty: $("#f-royalty").value,
+    obType: obType === "— none —" ? "" : obType,
+    obDate: $("#f-obdate").value,
+    notes: $("#f-notes").value.trim(),
+    file: pendingFile,
+  };
+  if (id) {
+    const i = DB.records.findIndex(x => x.id === id);
+    DB.records[i] = Object.assign(DB.records[i], rec);
+    toast("Record updated");
+  } else {
+    rec.id = nextId();
+    rec.createdAt = T;
+    DB.records.unshift(rec);
+    toast("New record logged — " + rec.id);
+  }
+  save(); closeAll(); render();
+};
+
+function nextId() {
+  const max = DB.records.reduce((m, r) => {
+    const n = parseInt(String(r.id).replace(/\D/g, ""), 10);
+    return isNaN(n) ? m : Math.max(m, n);
+  }, 1000);
+  return "REC-" + (max + 1);
+}
+
+/* ---------- file dropzone ---------- */
+const dz = $("#dropzone");
+dz.onclick = () => $("#f-file").click();
+$("#f-file").onchange = (e) => { if (e.target.files[0]) { pendingFile = e.target.files[0].name; renderFilePreview(); } };
+["dragenter", "dragover"].forEach(ev => dz.addEventListener(ev, e => { e.preventDefault(); dz.classList.add("drag"); }));
+["dragleave", "drop"].forEach(ev => dz.addEventListener(ev, e => { e.preventDefault(); dz.classList.remove("drag"); }));
+dz.addEventListener("drop", e => { const f = e.dataTransfer.files[0]; if (f) { pendingFile = f.name; renderFilePreview(); } });
+
+/* ---------- misc ---------- */
+function closeAll() { document.querySelectorAll(".overlay").forEach(o => o.classList.remove("open")); }
+document.querySelectorAll("[data-close]").forEach(b => b.onclick = closeAll);
+document.querySelectorAll(".overlay").forEach(o => o.addEventListener("click", e => { if (e.target === o) closeAll(); }));
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeAll(); });
+
+function toast(msg, isErr) {
+  const t = $("#toast");
+  t.textContent = msg;
+  t.style.borderLeftColor = isErr ? "var(--red)" : "var(--green)";
+  t.classList.add("show");
+  clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove("show"), 2600);
+}
+function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
+
+/* ---------- wire nav ---------- */
+document.querySelectorAll("#nav button[data-view]").forEach(b => b.onclick = () => setView(b.dataset.view));
+$("#btn-intake").onclick = () => openIntake();
+$("#btn-intake-side").onclick = () => openIntake();
+$("#global-search").addEventListener("input", (e) => {
+  FILTER.q = e.target.value;
+  if (VIEW !== "records") setView("records"); else render();
+});
+
+window.openDetail = openDetail;
+window.clearFile = clearFile;
+
+render();
+</script>
+</body>
+</html>
