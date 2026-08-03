@@ -52,10 +52,39 @@ An obligation calendar that classifies every reminder as **Overdue**,
 payments, lease renewals, ROW renewals, royalty reports, compliance filings,
 option deadlines, and reclamation milestones don't slip.
 
-### 4. Dashboard
+### 4. GIS / Tract Map
+A **Public Land Survey System (PLSS)** view. Each record's legal description
+(`T29N R16W Sec 4–9, 16–21`) is parsed into a township + section list and
+plotted on a 6×6 section grid (36 sections / township), with each tract's
+footprint shaded in its record-type color. Pick a township from the sidebar,
+see its tracts and acreage, and click any shaded parcel (or a tract in the
+list) to open the record.
+
+### 5. Documents (real, openable PDFs)
+Every seeded record carries **generated mock PDF instruments** — lease
+agreements, ROW grants, easements, permits, royalty agreements, plus a few
+Land Department memos. They open in an in-app PDF viewer and can be
+downloaded. New intake supports **drag-and-drop of your own files** (read
+in-browser, no upload) which then open the same way.
+
+### 6. Dashboard
 Portfolio KPIs (records, acreage under management, overdue/soon obligations,
 annual rentals), a feed of upcoming & overdue obligations, and a
 portfolio-by-type breakdown.
+
+## Mock documents
+
+The PDFs under `documents/` (and embedded in `index.html` as data URIs so the
+single file is fully self-contained) are produced by
+`scripts/gen-docs.js` — a dependency-free Node PDF writer. Regenerate them
+with:
+
+```
+node scripts/gen-docs.js
+```
+
+This rewrites `documents/*.pdf` and re-injects the `window.DOC_BLOB` block in
+`index.html`.
 
 ## Data model (per record)
 
@@ -68,7 +97,7 @@ portfolio-by-type breakdown.
 | `eff`, `exp` | effective & term-end dates |
 | `rental`, `royalty` | annual rental $, royalty % |
 | `obType`, `obDate` | next obligation → tickler reminder |
-| `notes`, `file` | free text + attached filename |
+| `notes`, `docs[]` | free text + attached documents (`{name, kind, data}`) |
 
 ## Notes for reviewers
 
