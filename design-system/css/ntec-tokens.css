@@ -1,0 +1,213 @@
+/* ============================================================================
+   NTEC Design Tokens
+   Source of truth for colors, typography, spacing, and other design values.
+   Pulled directly from the NTEC Brand Standards Guideline (May 2024).
+   ============================================================================ */
+
+:root {
+  /* --------------------------------------------------------------------------
+     COLOR — PRIMARY PALETTE
+     The colors that form the NTEC logo. Use these for headlines, CTAs,
+     key UI surfaces, and brand-defining accents.
+     -------------------------------------------------------------------------- */
+
+  /* Neutral Black / Charcoal — RGB 33/30/31 */
+  --ntec-color-black: #211E1F;
+
+  /* NTEC Orange — Pantone 1655 C — RGB 218/98/39
+     Primary accent / CTA color. Use sparingly to preserve impact. */
+  --ntec-color-orange: #DA6227;
+
+  /* Sand — Pantone 7527 C — RGB 216/201/163
+     Warm neutral. Good for subtle backgrounds, dividers. */
+  --ntec-color-sand: #D8C9A3;
+
+  /* Sky Blue — Pantone 2915 C — RGB 105/189/226
+     Secondary accent. Pairs with orange for energy/tech contexts. */
+  --ntec-color-sky: #69BDE2;
+
+  /* --------------------------------------------------------------------------
+     COLOR — SECONDARY PALETTE
+     Supporting colors for data viz, status indicators, and richer layouts.
+     -------------------------------------------------------------------------- */
+
+  --ntec-color-steel:  #496A96; /* Pantone 7683 C */
+  --ntec-color-navy:   #2D3949; /* Pantone 433 C   */
+  --ntec-color-brown:  #31261D; /* Pantone Black 4 C */
+  --ntec-color-sage:   #6C886A; /* Pantone 2407 C */
+  --ntec-color-mauve:  #9B7793; /* Pantone 5145 C */
+
+  /* --------------------------------------------------------------------------
+     COLOR — NEUTRAL SCALE
+     Derived neutrals for surfaces, borders, and text. Anchored to the
+     brand Neutral Black so they feel like part of the palette, not generic gray.
+     -------------------------------------------------------------------------- */
+
+  --ntec-color-white:       #FFFFFF;
+  --ntec-color-gray-50:     #F7F6F4;
+  --ntec-color-gray-100:    #ECEAE6;
+  --ntec-color-gray-200:    #D9D6D0;
+  --ntec-color-gray-300:    #BAB6AE;
+  --ntec-color-gray-400:    #8E8A82;
+  --ntec-color-gray-500:    #6A6661;
+  --ntec-color-gray-600:    #4D4946;
+  --ntec-color-gray-700:    #363330;
+  --ntec-color-gray-800:    #2A2725;
+  --ntec-color-gray-900:    #211E1F; /* === brand black */
+
+  /* --------------------------------------------------------------------------
+     COLOR — SEMANTIC TOKENS
+     Reference these in component CSS rather than the raw palette names.
+     If we rebrand or theme later, only this layer changes.
+     -------------------------------------------------------------------------- */
+
+  /* Surfaces */
+  --ntec-bg-base:       var(--ntec-color-white);
+  --ntec-bg-subtle:     var(--ntec-color-gray-50);
+  --ntec-bg-muted:      var(--ntec-color-gray-100);
+  --ntec-bg-inverse:    var(--ntec-color-black);
+  --ntec-bg-brand:      var(--ntec-color-navy);
+
+  /* Text */
+  --ntec-text-primary:   var(--ntec-color-gray-900);
+  --ntec-text-secondary: var(--ntec-color-gray-600);
+  --ntec-text-muted:     var(--ntec-color-gray-500);
+  --ntec-text-inverse:   var(--ntec-color-white);
+  --ntec-text-brand:     var(--ntec-color-orange);
+  --ntec-text-link:      var(--ntec-color-steel);
+  --ntec-text-link-hover:var(--ntec-color-navy);
+
+  /* Borders */
+  --ntec-border-subtle:  var(--ntec-color-gray-200);
+  --ntec-border-default: var(--ntec-color-gray-300);
+  --ntec-border-strong:  var(--ntec-color-gray-600);
+  --ntec-border-focus:   var(--ntec-color-sky);
+
+  /* Action / brand */
+  --ntec-action-primary:        var(--ntec-color-orange);
+  --ntec-action-primary-hover:  #C2531F;
+  --ntec-action-primary-active: #A3441A;
+  --ntec-action-primary-text:   var(--ntec-color-white);
+
+  --ntec-action-secondary:        var(--ntec-color-navy);
+  --ntec-action-secondary-hover:  #1E2733;
+  --ntec-action-secondary-active: #161D27;
+  --ntec-action-secondary-text:   var(--ntec-color-white);
+
+  /* Status — derived for digital UI (not in PDF brand guide; chosen for
+     legibility and AA contrast against white surfaces) */
+  --ntec-status-success: #2F7D32;
+  --ntec-status-warning: #B45309;
+  --ntec-status-danger:  #B42318;
+  --ntec-status-info:    var(--ntec-color-steel);
+
+  /* --------------------------------------------------------------------------
+     TYPOGRAPHY
+     Brand-mandated fonts: Franklin Gothic Medium (display) + Calibri (body).
+     Neither is a free webfont — these stacks fall back gracefully on machines
+     that don't have them installed. See README.md for the licensed-webfont
+     story and the Google-Fonts-friendly alternative (Libre Franklin / Carlito).
+     -------------------------------------------------------------------------- */
+
+  --ntec-font-display: "Franklin Gothic Medium", "Franklin Gothic",
+                       "ITC Franklin Gothic", "Arial Narrow", Arial, sans-serif;
+  --ntec-font-body:    Calibri, "Carlito", "Segoe UI", Tahoma,
+                       "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --ntec-font-mono:    ui-monospace, SFMono-Regular, "SF Mono", Menlo,
+                       Consolas, "Liberation Mono", monospace;
+
+  /* Type scale (modular, ~1.20 ratio). px values for clarity; convert
+     to rem in your project if you prefer. */
+  --ntec-text-xs:   12px;
+  --ntec-text-sm:   14px;
+  --ntec-text-base: 16px;
+  --ntec-text-lg:   18px;
+  --ntec-text-xl:   20px;
+  --ntec-text-2xl:  24px;
+  --ntec-text-3xl:  30px;
+  --ntec-text-4xl:  36px;
+  --ntec-text-5xl:  48px;
+
+  /* Line heights */
+  --ntec-leading-tight:  1.2;
+  --ntec-leading-snug:   1.35;
+  --ntec-leading-normal: 1.5;
+  --ntec-leading-loose:  1.75;
+
+  /* Weights */
+  --ntec-weight-regular:  400;
+  --ntec-weight-medium:   500;
+  --ntec-weight-semibold: 600;
+  --ntec-weight-bold:     700;
+
+  /* Letter spacing */
+  --ntec-tracking-tight:  -0.01em;
+  --ntec-tracking-normal: 0;
+  --ntec-tracking-wide:   0.05em;
+  --ntec-tracking-wider:  0.1em;   /* for uppercase eyebrows */
+
+  /* --------------------------------------------------------------------------
+     SPACING — 4px base scale
+     -------------------------------------------------------------------------- */
+
+  --ntec-space-0:   0;
+  --ntec-space-1:   4px;
+  --ntec-space-2:   8px;
+  --ntec-space-3:   12px;
+  --ntec-space-4:   16px;
+  --ntec-space-5:   20px;
+  --ntec-space-6:   24px;
+  --ntec-space-8:   32px;
+  --ntec-space-10:  40px;
+  --ntec-space-12:  48px;
+  --ntec-space-16:  64px;
+  --ntec-space-20:  80px;
+  --ntec-space-24:  96px;
+
+  /* --------------------------------------------------------------------------
+     RADII
+     -------------------------------------------------------------------------- */
+
+  --ntec-radius-none: 0;
+  --ntec-radius-sm:   2px;
+  --ntec-radius-md:   4px;   /* default */
+  --ntec-radius-lg:   8px;
+  --ntec-radius-xl:   12px;
+  --ntec-radius-pill: 999px;
+
+  /* --------------------------------------------------------------------------
+     ELEVATION
+     Subtle. NTEC's brand reads serious/industrial — avoid heavy shadows.
+     -------------------------------------------------------------------------- */
+
+  --ntec-shadow-xs: 0 1px 2px rgba(33, 30, 31, 0.06);
+  --ntec-shadow-sm: 0 1px 3px rgba(33, 30, 31, 0.08), 0 1px 2px rgba(33, 30, 31, 0.04);
+  --ntec-shadow-md: 0 4px 8px rgba(33, 30, 31, 0.08), 0 2px 4px rgba(33, 30, 31, 0.04);
+  --ntec-shadow-lg: 0 12px 24px rgba(33, 30, 31, 0.10), 0 4px 8px rgba(33, 30, 31, 0.04);
+
+  /* --------------------------------------------------------------------------
+     LAYOUT
+     -------------------------------------------------------------------------- */
+
+  --ntec-container-sm: 640px;
+  --ntec-container-md: 768px;
+  --ntec-container-lg: 1024px;
+  --ntec-container-xl: 1280px;
+
+  /* Logo minimum width per brand guidelines: 85px digital */
+  --ntec-logo-min-width: 85px;
+
+  /* Z-index scale */
+  --ntec-z-base:     0;
+  --ntec-z-dropdown: 100;
+  --ntec-z-sticky:   200;
+  --ntec-z-overlay:  300;
+  --ntec-z-modal:    400;
+  --ntec-z-toast:    500;
+
+  /* Motion */
+  --ntec-duration-fast:   120ms;
+  --ntec-duration-normal: 200ms;
+  --ntec-duration-slow:   320ms;
+  --ntec-easing-standard: cubic-bezier(0.2, 0, 0, 1);
+}

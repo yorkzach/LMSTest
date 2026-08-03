@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NTEC Style Guide — Tailwind Examples</title>
+
+  <!-- Tailwind Play CDN — for demo/showcase only. In production, use a real
+       Tailwind build with the preset from ../tailwind.config.js. -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Inline copy of the tokens from ../tailwind.config.js so the CDN can
+    // pick up the NTEC theme. Keep in sync with tailwind.config.js.
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            "ntec-black":  "#211E1F",
+            "ntec-orange": "#DA6227",
+            "ntec-sand":   "#D8C9A3",
+            "ntec-sky":    "#69BDE2",
+            "ntec-steel":  "#496A96",
+            "ntec-navy":   "#2D3949",
+            "ntec-brown":  "#31261D",
+            "ntec-sage":   "#6C886A",
+            "ntec-mauve":  "#9B7793",
+            "ntec-gray": {
+              50: "#F7F6F4", 100: "#ECEAE6", 200: "#D9D6D0",
+              300: "#BAB6AE", 400: "#8E8A82", 500: "#6A6661",
+              600: "#4D4946", 700: "#363330", 800: "#2A2725",
+              900: "#211E1F",
+            },
+            "ntec-success": "#2F7D32",
+            "ntec-warning": "#B45309",
+            "ntec-danger":  "#B42318",
+            "ntec-info":    "#496A96",
+          },
+          fontFamily: {
+            "ntec-display": ['"Franklin Gothic Medium"', '"Franklin Gothic"', '"ITC Franklin Gothic"', '"Arial Narrow"', 'Arial', 'sans-serif'],
+            "ntec-body":    ['Calibri', 'Carlito', '"Segoe UI"', 'Tahoma', '"Helvetica Neue"', 'Arial', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    body { font-family: Calibri, "Segoe UI", Tahoma, sans-serif; }
+    h1, h2, h3, h4, h5, h6 { font-family: "Franklin Gothic Medium", "Franklin Gothic", "Arial Narrow", Arial, sans-serif; }
+  </style>
+</head>
+<body class="bg-white text-ntec-gray-900 font-ntec-body">
+
+  <!-- Navbar -->
+  <nav class="flex items-center gap-6 px-6 py-4 border-b border-ntec-gray-200 bg-white">
+    <img src="../assets/logos/horizontal/png/23-NEH-08761 - NTEC Logo-Suite_Horizontal-4C.png"
+         alt="Navajo Transitional Energy Company"
+         class="h-9 w-auto">
+    <ul class="flex gap-5 list-none m-0 p-0">
+      <li><a href="index.html" class="font-ntec-display text-sm uppercase tracking-wider text-ntec-gray-700 hover:text-ntec-orange no-underline">Plain CSS</a></li>
+      <li><a href="tailwind.html" class="font-ntec-display text-sm uppercase tracking-wider text-ntec-orange border-b-2 border-ntec-orange no-underline" aria-current="page">Tailwind</a></li>
+      <li><a href="logos.html" class="font-ntec-display text-sm uppercase tracking-wider text-ntec-gray-700 hover:text-ntec-orange no-underline">Logos</a></li>
+    </ul>
+    <span class="flex-1"></span>
+    <span class="font-ntec-display text-xs uppercase tracking-wider text-ntec-gray-500">Tailwind demo</span>
+  </nav>
+
+  <main class="max-w-7xl mx-auto px-6 py-12">
+
+    <!-- Hero -->
+    <section class="mb-16">
+      <div class="font-ntec-display text-xs font-semibold uppercase tracking-wider text-ntec-orange mb-2">Energy · Community · Environment</div>
+      <h1 class="font-ntec-display text-5xl font-medium leading-tight mb-3">Built with Tailwind</h1>
+      <p class="text-lg text-ntec-gray-600 max-w-2xl mb-6">
+        Same brand tokens as the plain-CSS version, exposed as Tailwind utility classes.
+        Drop the preset into any project's <code class="bg-ntec-gray-100 px-1.5 py-0.5 rounded">tailwind.config.js</code> to get these.
+      </p>
+      <div class="flex gap-3">
+        <button class="font-ntec-display uppercase tracking-wide text-base bg-ntec-orange hover:bg-orange-700 text-white px-6 py-3 rounded">Primary action</button>
+        <button class="font-ntec-display uppercase tracking-wide text-base bg-ntec-navy hover:bg-ntec-gray-900 text-white px-6 py-3 rounded">Secondary</button>
+        <button class="font-ntec-display uppercase tracking-wide text-base border border-ntec-gray-600 text-ntec-gray-900 hover:bg-ntec-gray-50 px-6 py-3 rounded">Outline</button>
+      </div>
+    </section>
+
+    <!-- Color grid -->
+    <section class="mb-16">
+      <div class="font-ntec-display text-xs font-semibold uppercase tracking-wider text-ntec-orange mb-2">Color</div>
+      <h2 class="font-ntec-display text-4xl font-medium mb-6">Tailwind color tokens</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div>
+          <div class="h-20 rounded bg-ntec-black"></div>
+          <div class="mt-2 text-sm"><strong class="font-ntec-display">bg-ntec-black</strong><br><code class="text-xs text-ntec-gray-500">#211E1F</code></div>
+        </div>
+        <div>
+          <div class="h-20 rounded bg-ntec-orange"></div>
+          <div class="mt-2 text-sm"><strong class="font-ntec-display">bg-ntec-orange</strong><br><code class="text-xs text-ntec-gray-500">#DA6227</code></div>
+        </div>
+        <div>
+          <div class="h-20 rounded bg-ntec-sand"></div>
+          <div class="mt-2 text-sm"><strong class="font-ntec-display">bg-ntec-sand</strong><br><code class="text-xs text-ntec-gray-500">#D8C9A3</code></div>
+        </div>
+        <div>
+          <div class="h-20 rounded bg-ntec-sky"></div>
+          <div class="mt-2 text-sm"><strong class="font-ntec-display">bg-ntec-sky</strong><br><code class="text-xs text-ntec-gray-500">#69BDE2</code></div>
+        </div>
+        <div>
+          <div class="h-20 rounded bg-ntec-steel"></div>
+          <div class="mt-2 text-sm"><strong class="font-ntec-display">bg-ntec-steel</strong><br><code class="text-xs text-ntec-gray-500">#496A96</code></div>
+        </div>
+        <div>
+          <div class="h-20 rounded bg-ntec-navy"></div>
+          <div class="mt-2 text-sm"><strong class="font-ntec-display">bg-ntec-navy</strong><br><code class="text-xs text-ntec-gray-500">#2D3949</code></div>
+        </div>
+        <div>
+          <div class="h-20 rounded bg-ntec-sage"></div>
+          <div class="mt-2 text-sm"><strong class="font-ntec-display">bg-ntec-sage</strong><br><code class="text-xs text-ntec-gray-500">#6C886A</code></div>
+        </div>
+        <div>
+          <div class="h-20 rounded bg-ntec-mauve"></div>
+          <div class="mt-2 text-sm"><strong class="font-ntec-display">bg-ntec-mauve</strong><br><code class="text-xs text-ntec-gray-500">#9B7793</code></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Card grid -->
+    <section class="mb-16">
+      <div class="font-ntec-display text-xs font-semibold uppercase tracking-wider text-ntec-orange mb-2">Component</div>
+      <h2 class="font-ntec-display text-4xl font-medium mb-6">Cards</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="bg-white border border-ntec-gray-200 rounded-lg p-6 shadow-sm">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="font-ntec-display text-xl m-0">Standard</h3>
+            <span class="font-ntec-display text-xs uppercase tracking-wider bg-ntec-gray-100 px-2 py-0.5 rounded-full">Active</span>
+          </div>
+          <p class="text-ntec-gray-600 m-0">Default card style using Tailwind utilities and the NTEC token palette.</p>
+        </div>
+
+        <div class="bg-white border border-ntec-gray-200 border-t-4 border-t-ntec-orange rounded-lg p-6 shadow-sm">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="font-ntec-display text-xl m-0">Accent</h3>
+            <span class="font-ntec-display text-xs uppercase tracking-wider bg-ntec-orange text-white px-2 py-0.5 rounded-full">Priority</span>
+          </div>
+          <p class="text-ntec-gray-600">Orange top border signals brand without dominating the card.</p>
+          <div class="flex gap-3 mt-6 pt-4 border-t border-ntec-gray-200">
+            <button class="font-ntec-display uppercase tracking-wide text-sm bg-ntec-orange text-white px-4 py-2 rounded">Action</button>
+            <button class="font-ntec-display uppercase tracking-wide text-sm text-ntec-gray-900 hover:bg-ntec-gray-100 px-4 py-2 rounded">Cancel</button>
+          </div>
+        </div>
+
+        <div class="bg-ntec-navy text-white rounded-lg p-6 shadow-md">
+          <div class="font-ntec-display text-xs uppercase tracking-wider text-ntec-sand mb-2">Inverse</div>
+          <h3 class="font-ntec-display text-xl m-0 mb-2">Dark card</h3>
+          <p class="text-ntec-gray-300 m-0">For sections that need strong brand grounding (headers, key metrics).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Alerts -->
+    <section class="mb-16">
+      <div class="font-ntec-display text-xs font-semibold uppercase tracking-wider text-ntec-orange mb-2">Component</div>
+      <h2 class="font-ntec-display text-4xl font-medium mb-6">Alerts</h2>
+      <div class="space-y-3">
+        <div class="p-4 rounded border-l-4 border-ntec-sky" style="background:#EAF6FB">
+          <p class="font-ntec-display font-medium m-0">Heads up</p>
+          <p class="text-sm m-0 mt-1">An informational message with the sky accent.</p>
+        </div>
+        <div class="p-4 rounded border-l-4 border-ntec-success" style="background:#E8F4E9">
+          <p class="font-ntec-display font-medium m-0">Saved</p>
+          <p class="text-sm m-0 mt-1">Changes saved successfully.</p>
+        </div>
+        <div class="p-4 rounded border-l-4 border-ntec-warning" style="background:#FBF1E4">
+          <p class="font-ntec-display font-medium m-0">Approaching limit</p>
+          <p class="text-sm m-0 mt-1">80% of quota used.</p>
+        </div>
+        <div class="p-4 rounded border-l-4 border-ntec-danger" style="background:#FBEAE8">
+          <p class="font-ntec-display font-medium m-0">Something went wrong</p>
+          <p class="text-sm m-0 mt-1">Could not save changes. Please retry.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="bg-ntec-black text-ntec-gray-300 p-12 mt-12">
+    <div class="max-w-7xl mx-auto">
+      <img src="../assets/logos/horizontal/png/23-NEH-08761 - NTEC Logo-Suite_Horizontal-4C -WhiteText.png"
+           alt="Navajo Transitional Energy Company"
+           class="h-10 w-auto">
+      <p class="font-ntec-display uppercase tracking-wider text-ntec-sand mt-4">Energy · Community · Environment</p>
+      <p class="text-xs text-ntec-gray-400 mt-6">&copy; Navajo Transitional Energy Company. Internal style guide — not for public distribution.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

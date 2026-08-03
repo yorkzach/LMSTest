@@ -1,0 +1,545 @@
+/* ============================================================================
+   NTEC Component Styles (Plain CSS)
+   Built on top of ntec-tokens.css. Import both files in this order:
+     <link rel="stylesheet" href="css/ntec-tokens.css">
+     <link rel="stylesheet" href="css/ntec-components.css">
+   ============================================================================ */
+
+/* ----------------------------------------------------------------------------
+   BASE / RESET
+   Minimal — does not stomp on application-specific resets.
+   ---------------------------------------------------------------------------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--ntec-font-body);
+  font-size: var(--ntec-text-base);
+  line-height: var(--ntec-leading-normal);
+  color: var(--ntec-text-primary);
+  background: var(--ntec-bg-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ----------------------------------------------------------------------------
+   TYPOGRAPHY
+   Franklin Gothic Medium for display, Calibri for body — per brand guide.
+   ---------------------------------------------------------------------------- */
+
+h1, h2, h3, h4, h5, h6,
+.ntec-h1, .ntec-h2, .ntec-h3, .ntec-h4, .ntec-h5, .ntec-h6 {
+  font-family: var(--ntec-font-display);
+  font-weight: var(--ntec-weight-medium);
+  line-height: var(--ntec-leading-tight);
+  letter-spacing: var(--ntec-tracking-tight);
+  margin: 0 0 var(--ntec-space-3) 0;
+  color: var(--ntec-text-primary);
+}
+
+h1, .ntec-h1 { font-size: var(--ntec-text-5xl); }
+h2, .ntec-h2 { font-size: var(--ntec-text-4xl); }
+h3, .ntec-h3 { font-size: var(--ntec-text-3xl); }
+h4, .ntec-h4 { font-size: var(--ntec-text-2xl); }
+h5, .ntec-h5 { font-size: var(--ntec-text-xl); }
+h6, .ntec-h6 {
+  font-size: var(--ntec-text-base);
+  text-transform: uppercase;
+  letter-spacing: var(--ntec-tracking-wider);
+}
+
+p { margin: 0 0 var(--ntec-space-4) 0; }
+
+/* Eyebrow / kicker — uppercase tag above a headline */
+.ntec-eyebrow {
+  font-family: var(--ntec-font-display);
+  font-size: var(--ntec-text-xs);
+  font-weight: var(--ntec-weight-semibold);
+  letter-spacing: var(--ntec-tracking-wider);
+  text-transform: uppercase;
+  color: var(--ntec-color-orange);
+  margin-bottom: var(--ntec-space-2);
+}
+
+/* Lead paragraph */
+.ntec-lead {
+  font-size: var(--ntec-text-lg);
+  line-height: var(--ntec-leading-snug);
+  color: var(--ntec-text-secondary);
+}
+
+a {
+  color: var(--ntec-text-link);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color var(--ntec-duration-fast) var(--ntec-easing-standard);
+}
+
+a:hover { color: var(--ntec-text-link-hover); }
+
+a:focus-visible {
+  outline: 2px solid var(--ntec-border-focus);
+  outline-offset: 2px;
+  border-radius: var(--ntec-radius-sm);
+}
+
+code, pre, kbd, samp {
+  font-family: var(--ntec-font-mono);
+  font-size: 0.95em;
+}
+
+code {
+  background: var(--ntec-bg-muted);
+  padding: 1px 6px;
+  border-radius: var(--ntec-radius-sm);
+}
+
+/* ----------------------------------------------------------------------------
+   LAYOUT
+   ---------------------------------------------------------------------------- */
+
+.ntec-container {
+  width: 100%;
+  max-width: var(--ntec-container-xl);
+  margin: 0 auto;
+  padding: 0 var(--ntec-space-6);
+}
+
+.ntec-container--narrow { max-width: var(--ntec-container-md); }
+
+.ntec-stack > * + * { margin-top: var(--ntec-space-4); }
+.ntec-stack--lg > * + * { margin-top: var(--ntec-space-8); }
+
+/* ----------------------------------------------------------------------------
+   BUTTONS
+   ---------------------------------------------------------------------------- */
+
+.ntec-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ntec-space-2);
+  font-family: var(--ntec-font-display);
+  font-weight: var(--ntec-weight-medium);
+  font-size: var(--ntec-text-base);
+  line-height: 1;
+  letter-spacing: var(--ntec-tracking-wide);
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: var(--ntec-space-3) var(--ntec-space-6);
+  border-radius: var(--ntec-radius-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition:
+    background-color var(--ntec-duration-fast) var(--ntec-easing-standard),
+    color var(--ntec-duration-fast) var(--ntec-easing-standard),
+    border-color var(--ntec-duration-fast) var(--ntec-easing-standard);
+  user-select: none;
+}
+
+.ntec-btn:focus-visible {
+  outline: 2px solid var(--ntec-border-focus);
+  outline-offset: 2px;
+}
+
+.ntec-btn:disabled,
+.ntec-btn[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Primary — NTEC Orange */
+.ntec-btn--primary {
+  background: var(--ntec-action-primary);
+  color: var(--ntec-action-primary-text);
+}
+.ntec-btn--primary:hover:not(:disabled) { background: var(--ntec-action-primary-hover); }
+.ntec-btn--primary:active:not(:disabled) { background: var(--ntec-action-primary-active); }
+
+/* Secondary — Navy */
+.ntec-btn--secondary {
+  background: var(--ntec-action-secondary);
+  color: var(--ntec-action-secondary-text);
+}
+.ntec-btn--secondary:hover:not(:disabled) { background: var(--ntec-action-secondary-hover); }
+.ntec-btn--secondary:active:not(:disabled) { background: var(--ntec-action-secondary-active); }
+
+/* Outline */
+.ntec-btn--outline {
+  background: transparent;
+  color: var(--ntec-text-primary);
+  border-color: var(--ntec-border-strong);
+}
+.ntec-btn--outline:hover:not(:disabled) {
+  background: var(--ntec-bg-subtle);
+  border-color: var(--ntec-text-primary);
+}
+
+/* Ghost — minimal */
+.ntec-btn--ghost {
+  background: transparent;
+  color: var(--ntec-text-primary);
+}
+.ntec-btn--ghost:hover:not(:disabled) { background: var(--ntec-bg-muted); }
+
+/* Sizes */
+.ntec-btn--sm { font-size: var(--ntec-text-sm); padding: var(--ntec-space-2) var(--ntec-space-4); }
+.ntec-btn--lg { font-size: var(--ntec-text-lg); padding: var(--ntec-space-4) var(--ntec-space-8); }
+
+/* ----------------------------------------------------------------------------
+   FORMS
+   ---------------------------------------------------------------------------- */
+
+.ntec-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ntec-space-2);
+  margin-bottom: var(--ntec-space-4);
+}
+
+.ntec-label {
+  font-family: var(--ntec-font-body);
+  font-size: var(--ntec-text-sm);
+  font-weight: var(--ntec-weight-semibold);
+  color: var(--ntec-text-primary);
+}
+
+.ntec-label--required::after {
+  content: " *";
+  color: var(--ntec-status-danger);
+}
+
+.ntec-input,
+.ntec-select,
+.ntec-textarea {
+  font-family: var(--ntec-font-body);
+  font-size: var(--ntec-text-base);
+  color: var(--ntec-text-primary);
+  background: var(--ntec-bg-base);
+  border: 1px solid var(--ntec-border-default);
+  border-radius: var(--ntec-radius-md);
+  padding: var(--ntec-space-3) var(--ntec-space-3);
+  line-height: var(--ntec-leading-normal);
+  transition:
+    border-color var(--ntec-duration-fast) var(--ntec-easing-standard),
+    box-shadow var(--ntec-duration-fast) var(--ntec-easing-standard);
+  width: 100%;
+}
+
+.ntec-input:hover,
+.ntec-select:hover,
+.ntec-textarea:hover {
+  border-color: var(--ntec-border-strong);
+}
+
+.ntec-input:focus,
+.ntec-select:focus,
+.ntec-textarea:focus {
+  outline: none;
+  border-color: var(--ntec-color-sky);
+  box-shadow: 0 0 0 3px rgba(104, 188, 223, 0.25);
+}
+
+.ntec-input:disabled,
+.ntec-select:disabled,
+.ntec-textarea:disabled {
+  background: var(--ntec-bg-muted);
+  color: var(--ntec-text-muted);
+  cursor: not-allowed;
+}
+
+.ntec-textarea {
+  min-height: 96px;
+  resize: vertical;
+}
+
+.ntec-input--error,
+.ntec-select--error,
+.ntec-textarea--error {
+  border-color: var(--ntec-status-danger);
+}
+.ntec-input--error:focus,
+.ntec-select--error:focus,
+.ntec-textarea--error:focus {
+  box-shadow: 0 0 0 3px rgba(180, 35, 24, 0.20);
+}
+
+.ntec-help {
+  font-size: var(--ntec-text-sm);
+  color: var(--ntec-text-muted);
+}
+
+.ntec-error {
+  font-size: var(--ntec-text-sm);
+  color: var(--ntec-status-danger);
+}
+
+.ntec-checkbox,
+.ntec-radio {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ntec-space-2);
+  font-size: var(--ntec-text-base);
+  cursor: pointer;
+}
+
+.ntec-checkbox input[type="checkbox"],
+.ntec-radio input[type="radio"] {
+  accent-color: var(--ntec-color-orange);
+  width: 16px;
+  height: 16px;
+}
+
+/* ----------------------------------------------------------------------------
+   CARDS
+   ---------------------------------------------------------------------------- */
+
+.ntec-card {
+  background: var(--ntec-bg-base);
+  border: 1px solid var(--ntec-border-subtle);
+  border-radius: var(--ntec-radius-lg);
+  padding: var(--ntec-space-6);
+  box-shadow: var(--ntec-shadow-sm);
+}
+
+.ntec-card--flat { box-shadow: none; }
+.ntec-card--elevated { box-shadow: var(--ntec-shadow-md); border-color: transparent; }
+
+.ntec-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ntec-space-4);
+  margin-bottom: var(--ntec-space-4);
+}
+
+.ntec-card__title {
+  font-family: var(--ntec-font-display);
+  font-size: var(--ntec-text-xl);
+  font-weight: var(--ntec-weight-medium);
+  margin: 0;
+}
+
+.ntec-card__body { color: var(--ntec-text-secondary); }
+
+.ntec-card__footer {
+  display: flex;
+  gap: var(--ntec-space-3);
+  margin-top: var(--ntec-space-6);
+  padding-top: var(--ntec-space-4);
+  border-top: 1px solid var(--ntec-border-subtle);
+}
+
+/* Accent strip — the orange-rule visual identity from print materials */
+.ntec-card--accent {
+  border-top: 4px solid var(--ntec-color-orange);
+  border-top-left-radius: var(--ntec-radius-lg);
+  border-top-right-radius: var(--ntec-radius-lg);
+}
+
+/* ----------------------------------------------------------------------------
+   TABLES
+   ---------------------------------------------------------------------------- */
+
+.ntec-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--ntec-text-sm);
+  background: var(--ntec-bg-base);
+}
+
+.ntec-table th,
+.ntec-table td {
+  text-align: left;
+  padding: var(--ntec-space-3) var(--ntec-space-4);
+  border-bottom: 1px solid var(--ntec-border-subtle);
+  vertical-align: middle;
+}
+
+.ntec-table thead th {
+  font-family: var(--ntec-font-display);
+  font-size: var(--ntec-text-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--ntec-tracking-wider);
+  color: var(--ntec-text-secondary);
+  border-bottom: 2px solid var(--ntec-border-default);
+  background: var(--ntec-bg-subtle);
+}
+
+.ntec-table tbody tr:hover { background: var(--ntec-bg-subtle); }
+.ntec-table--striped tbody tr:nth-child(even) { background: var(--ntec-bg-subtle); }
+
+/* ----------------------------------------------------------------------------
+   ALERTS / CALLOUTS
+   ---------------------------------------------------------------------------- */
+
+.ntec-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ntec-space-3);
+  padding: var(--ntec-space-4);
+  border-radius: var(--ntec-radius-md);
+  border: 1px solid transparent;
+  border-left-width: 4px;
+}
+
+.ntec-alert__title {
+  font-family: var(--ntec-font-display);
+  font-weight: var(--ntec-weight-medium);
+  margin: 0 0 var(--ntec-space-1) 0;
+}
+
+.ntec-alert__body { font-size: var(--ntec-text-sm); }
+
+.ntec-alert--info    { background: #EAF6FB; border-color: var(--ntec-color-sky); color: var(--ntec-text-primary); }
+.ntec-alert--success { background: #E8F4E9; border-color: var(--ntec-status-success); color: var(--ntec-text-primary); }
+.ntec-alert--warning { background: #FBF1E4; border-color: var(--ntec-status-warning); color: var(--ntec-text-primary); }
+.ntec-alert--danger  { background: #FBEAE8; border-color: var(--ntec-status-danger); color: var(--ntec-text-primary); }
+
+/* ----------------------------------------------------------------------------
+   BADGES
+   ---------------------------------------------------------------------------- */
+
+.ntec-badge {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--ntec-font-display);
+  font-size: var(--ntec-text-xs);
+  font-weight: var(--ntec-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: var(--ntec-tracking-wider);
+  padding: 2px var(--ntec-space-2);
+  border-radius: var(--ntec-radius-pill);
+  background: var(--ntec-bg-muted);
+  color: var(--ntec-text-primary);
+}
+
+.ntec-badge--orange  { background: var(--ntec-color-orange); color: #fff; }
+.ntec-badge--navy    { background: var(--ntec-color-navy);   color: #fff; }
+.ntec-badge--success { background: var(--ntec-status-success); color: #fff; }
+.ntec-badge--warning { background: var(--ntec-status-warning); color: #fff; }
+.ntec-badge--danger  { background: var(--ntec-status-danger); color: #fff; }
+
+/* ----------------------------------------------------------------------------
+   NAVIGATION (Header / Top bar)
+   ---------------------------------------------------------------------------- */
+
+.ntec-navbar {
+  display: flex;
+  align-items: center;
+  gap: var(--ntec-space-6);
+  padding: var(--ntec-space-4) var(--ntec-space-6);
+  background: var(--ntec-bg-base);
+  border-bottom: 1px solid var(--ntec-border-subtle);
+}
+
+.ntec-navbar--dark {
+  background: var(--ntec-color-black);
+  border-bottom-color: var(--ntec-color-gray-800);
+  color: var(--ntec-text-inverse);
+}
+
+.ntec-navbar__brand img {
+  display: block;
+  height: 36px;
+  width: auto;
+}
+
+.ntec-navbar__links {
+  display: flex;
+  gap: var(--ntec-space-5);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ntec-navbar__links a {
+  font-family: var(--ntec-font-display);
+  font-size: var(--ntec-text-sm);
+  text-transform: uppercase;
+  letter-spacing: var(--ntec-tracking-wide);
+  text-decoration: none;
+  color: inherit;
+  padding: var(--ntec-space-2) 0;
+  border-bottom: 2px solid transparent;
+}
+
+.ntec-navbar__links a:hover,
+.ntec-navbar__links a[aria-current="page"] {
+  border-bottom-color: var(--ntec-color-orange);
+  color: var(--ntec-color-orange);
+}
+
+.ntec-navbar__spacer { flex: 1; }
+
+/* ----------------------------------------------------------------------------
+   FOOTER
+   ---------------------------------------------------------------------------- */
+
+.ntec-footer {
+  background: var(--ntec-color-black);
+  color: var(--ntec-color-gray-300);
+  padding: var(--ntec-space-12) var(--ntec-space-6);
+  font-size: var(--ntec-text-sm);
+}
+
+.ntec-footer a { color: var(--ntec-color-sand); }
+.ntec-footer a:hover { color: var(--ntec-color-orange); }
+
+.ntec-footer__tagline {
+  font-family: var(--ntec-font-display);
+  text-transform: uppercase;
+  letter-spacing: var(--ntec-tracking-wider);
+  color: var(--ntec-color-sand);
+  margin-top: var(--ntec-space-4);
+}
+
+/* ----------------------------------------------------------------------------
+   LOGO USAGE HELPERS
+   Enforces the minimum-width rule from the brand guide.
+   ---------------------------------------------------------------------------- */
+
+.ntec-logo {
+  display: inline-block;
+  min-width: var(--ntec-logo-min-width);
+}
+.ntec-logo img { display: block; width: 100%; height: auto; }
+
+/* Clear space: brand guide says "height of the 'N' around the logo."
+   That visually translates to ~12% of horizontal-logo width as breathing room. */
+.ntec-logo--clear-space { padding: 12%; }
+
+/* ----------------------------------------------------------------------------
+   UTILITIES
+   ---------------------------------------------------------------------------- */
+
+.ntec-text-orange  { color: var(--ntec-color-orange); }
+.ntec-text-navy    { color: var(--ntec-color-navy); }
+.ntec-text-muted   { color: var(--ntec-text-muted); }
+
+.ntec-bg-orange { background: var(--ntec-color-orange); color: #fff; }
+.ntec-bg-navy   { background: var(--ntec-color-navy);   color: #fff; }
+.ntec-bg-black  { background: var(--ntec-color-black);  color: #fff; }
+.ntec-bg-sand   { background: var(--ntec-color-sand);   color: var(--ntec-color-black); }
+.ntec-bg-sky    { background: var(--ntec-color-sky);    color: var(--ntec-color-black); }
+
+.ntec-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
